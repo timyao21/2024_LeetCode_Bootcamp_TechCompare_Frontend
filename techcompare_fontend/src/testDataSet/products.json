@@ -1,0 +1,5 @@
+[{"id": 0, "productName": "MacBook Pro", "imageLink": "../testDataSet/image1.jpg", "price": "1299"}, 
+{"id": 1, "productName": "iPhone 13", "imageLink": "../testDataSet/image1.jpg", "price": "799"}, 
+{"id": 2, "productName": "AirPods Pro", "imageLink": "../testDataSet/image1.jpg", "price": "249"}, 
+{"id": 3, "productName": "iPad Pro", "imageLink": "../testDataSet/image1.jpg", "price": "999"}, 
+{"id": 4, "productName": "Apple Watch Series 7", "imageLink": "../testDataSet/image1.jpg", "price": "399"}]
