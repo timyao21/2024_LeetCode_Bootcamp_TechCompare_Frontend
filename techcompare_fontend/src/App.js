@@ -14,6 +14,8 @@ import SignUp from './pages/SignUp.js';
 import SignIn from './pages/SignIn.js';
 import ProductPage from "./pages/ProductPage.js"
 
+import Test1 from "./pages/usertest.js"
+
 function App() {
   return (
     <BrowserRouter>
@@ -22,6 +24,7 @@ function App() {
         <Route path="/product/:id" element={<ProductPage />} />
         <Route path="/signup" element={<SignUp />} />
         <Route path="/signin" element={<SignIn />} />
+        <Route path="/test" element={<Test1 />} />
         <Route path="*" element={<NoPage />} />
       </Routes>
     </BrowserRouter>
@@ -29,3 +32,4 @@ function App() {
 }
 
 export default App;
+// serviceWorker.unregister();
