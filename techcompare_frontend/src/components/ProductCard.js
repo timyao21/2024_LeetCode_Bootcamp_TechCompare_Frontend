@@ -13,7 +13,7 @@ export default function Product({id, productName, imageLink, price}) {
 
     return (
         <Card sx={{ maxWidth: 345 }}>
-        <CardActionArea component={Link} to={`/product/${id}`}>
+        <CardActionArea component={Link} to={`/product/${productName}`}>
             <CardMedia
             component="img"
             height="140"
