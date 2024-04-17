@@ -6,18 +6,12 @@ import { styled } from '@mui/material/styles';
 import Paper from '@mui/material/Paper';
 
 //components
+import CategoryMenu from '../components/CategoryMenu.js';
 import ProductCard from '../components/ProductCard.js';
 
 // Import the JSON data
 import productsData from '../testDataSet/products.json';
 
-const Item = styled(Paper)(({ theme }) => ({
-    backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
-    ...theme.typography.body2,
-    padding: theme.spacing(1),
-    textAlign: 'center',
-    color: theme.palette.text.secondary,
-  }));
 
 function Home() {
     return(
@@ -26,7 +20,7 @@ function Home() {
             <Grid container spacing={2}>
                 {/* Menu on the Left */}
                 <Grid item xs={2}>
-                    <Item>Menu</Item>
+                    <CategoryMenu/>
                 </Grid>
                 {/* Second Item (Container for Nested Grid) */}
                 <Grid item xs={10}>
