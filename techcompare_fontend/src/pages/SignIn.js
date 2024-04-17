@@ -20,14 +20,14 @@ const defaultTheme = createTheme();
 
 export default function SignIn() {
 
-  const [user, setUser] = useState([]);
+  const [user, setUser] = useState(false);
   const [showAlert, setShowAlert] = useState(false);
 
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
     //API
-    const apiUrl = `http://localhost:9000/techCompare/User/login`;
+    const apiUrl = `http://localhost:8080/techCompare/user/login`;
 
     const singinRequest = {
       email: data.get('email'),
@@ -42,8 +42,8 @@ export default function SignIn() {
     axios.post(apiUrl, singinRequest)
     .then(response => {
         setUser(response.data);
-        console.log(user); // Changed from data to books to reflect the state correctly
-        if (user){
+        console.log(response.data); // true or false
+        if (response.data){
           setShowAlert(false);
         }
         else{

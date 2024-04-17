@@ -39,23 +39,16 @@ export default function SignUp() {
     };
 
     //API url
-    const apiUrlgetUser = `http://localhost:9000/techCompare/User/getUser?email=${encodeURIComponent(data.get('email'))}`;
-    const apiUrlRegister = `http://localhost:9000/techCompare/User/register`;
+    // const apiUrlgetUser = `http://localhost:8080/techCompare/User/getUser?email=${encodeURIComponent(data.get('email'))}`;
+    const apiUrlRegister = `http://localhost:8080/techCompare/user/register=${encodeURIComponent(data.get('email'))}`;
 
     // check if the email exist in the database
-    axios.get(apiUrlgetUser)
+    axios.get(apiUrlRegister)
     .then(response => {
-      setcheckUser(response.data);
-      console.log("checkUser:", checkUser);
-      // check if can not the email, user able to create a account
-      if (checkUser.length === 0) {
+      setUser(response.data);
+      console.log(response.data)// check if can not the email, user able to create a account
+      if (user) {
         setShowAlert(false);
-        // axios.post(apiUrlRegister, singupRequest)
-        // .then(response => {
-        //   setUser(response.data);
-        //   console.log("You created an account");
-        //   console.log(user);
-        // })
       }
       else{
         setShowAlert(true);
