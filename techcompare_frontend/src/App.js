@@ -29,3 +29,4 @@ function App() {
 }
 
 export default App;
+// serviceWorker.unregister();
