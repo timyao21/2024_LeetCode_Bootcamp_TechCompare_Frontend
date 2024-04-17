@@ -1,42 +1,39 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { Card, CardContent, CardMedia, Typography } from '@mui/material';
-
-// Import the JSON data
-import productsData from '../testDataSet/products.json'; 
-
-// Function to fetch product details by ID from the imported dataset
-const fetchProductById = async (id) => {
-  // Assuming your product IDs are stored as strings in the JSON file.
-  // If they are numbers, you might need to parse the id parameter to a number
-  const product = productsData.find(product => product.id.toString() === id);
-  return product; // Returns undefined if no product matches
-};
+import axios from 'axios';
 
 export default function ProductPage() {
     const { id } = useParams(); // Get the `id` param from the URL
-    const [product, setProduct] = useState({ id: '', productName: '', imageLink: '', price: '' });
+    // const [product, setProduct] = useState({ id: '', productName: '', imageLink: '', price: '' });
+    const [product, setProduct] = React.useState([]);
 
     useEffect(() => {
-        // Fetch product details and update state
-        fetchProductById(id).then(productDetails => {
-        if (productDetails) {
-            setProduct({
-            id: productDetails.id,
-            productName: productDetails.productName,
-            imageLink: productDetails.imageLink,
-            price: productDetails.price
-            });
-        }
-        });
-    }, [id]); // Re-run this effect if `id` changes
+        // fetch all products and console.log it 
+        const fetchData = async () => {
+            try {
+                // console.log(id)
+                const response = await axios.get('http://localhost:8080/techCompare/products/search', {params:{name: id}}); // Adjust the URL based on your server
+                setProduct(response.data[0]);
+                // console.log(response.data)
+            } catch (error) {
+                console.error('Error fetching data: ', error);
+                // Handle errors here based on your application's needs
+            }
+        };
+        console.log("fetchData")
+        fetchData();
+    }, [id]);
+
+    // console.log("Cur:", product.priceHistory[0].price)
 
   return (
     <div>
-        <p>id: {product.id}</p>
-        <p>productName: {product.productName}</p>
-        <p>imageLink: {product.imageLink}</p>
-        <p>price: {product.price}</p> {/* Displaying the product name */}
+        <p>id: {product.productStringId}</p>
+        <p>productName: {product.productName}</p> {/* Displaying the product name */}
+        <p>price: {product.currentPrice}</p> 
+        <p>category: {product.category}</p> 
+        <p>model: {product.model}</p>
     </div>
   );
 }

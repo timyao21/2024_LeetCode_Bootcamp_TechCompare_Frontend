@@ -1,5 +1,5 @@
 
-import * as React from 'react';
+import React, { useState, useEffect } from 'react';
 import Box from '@mui/material/Box';
 import Stack from '@mui/material/Stack';
 import Radio from '@mui/material/Radio';
@@ -9,33 +9,64 @@ import FormControl from '@mui/material/FormControl';
 import FormGroup from '@mui/material/FormGroup';
 import FormLabel from '@mui/material/FormLabel';
 import Checkbox from '@mui/material/Checkbox';
+import TextField from '@mui/material/TextField';
 
 
+function valuetext(value) {
+  return `$${value}`;
+}
 
-function CategoryMenu() {
-  const [categoryValue, setcategoryValue] = React.useState('All');
-  const [storeValue, setStoreValue] = React.useState([]);
+
+function CategoryMenu({onCategoriesChange, onBrandsChange, onMinPriceChange, onMaxPriceChange}) {
+  const [categoryValue, setCategoryValue] = React.useState([]);
+  // const [storeValue, setStoreValue] = React.useState([]);
+  const [brandsValue, setBrandsValue] = React.useState([]);
+  const [minPrice, setMinPrice] = useState('');
+  const [maxPrice, setMaxPrice] = useState('');
+
+  const handleMinPriceChange = (event) => {
+    setMinPrice(event.target.value);
+    onMinPriceChange(event.target.value)
+  };
+
+  const handleMaxPriceChange = (event) => {
+    setMaxPrice(event.target.value);
+    onMaxPriceChange(event.target.value)
+  };
+
+  const handleBlur = () => {
+    // console.log('Min Price:', minPrice);
+    // console.log('Max Price:', maxPrice);
+    // Here you can also perform other actions like validation or state updates
+  };
 
   const handleCategoryValueChange = (event) => {
-    setcategoryValue(event.target.value);
-  };
-
-  const handleStoreValueChange = (event) => {
     const { checked, value } = event.target;
-    setStoreValue(prev => 
-      checked 
-        ? [...prev, value] 
-        : prev.filter(item => item !== value)
-    );
+    const newCategories = checked ? [...categoryValue, value] : categoryValue.filter(item => item !== value);
+    setCategoryValue(newCategories);
+    onCategoriesChange(newCategories);  // Invoke the passed function from parent
   };
 
-  React.useEffect(() => {
-    console.log(categoryValue); // This will log the value after it has been updated
-  }, [categoryValue]); // This effect runs after `value` has been updated
+  // const handleStoreValueChange = (event) => {
+  //   const { checked, value } = event.target;
+  //   setStoreValue(prev => 
+  //     checked 
+  //       ? [...prev, value] 
+  //       : prev.filter(item => item !== value)
+  //   );
+  // };
 
-  React.useEffect(() => {
-    console.log(storeValue); // Logs the array of selected stores
-  }, [storeValue]);
+  const handleBrandsValueChange = (event) => {
+    const { checked, value } = event.target;
+    const newBrands = checked ? [...brandsValue, value] : brandsValue.filter(item => item !== value);
+    setBrandsValue(newBrands);
+    onBrandsChange(newBrands);  // Invoke the passed function from parent
+  };
+
+  // React.useEffect(() => {
+  //   console.log(storeValue); // Logs the array of selected stores
+  // }, [storeValue]);
+
 
   return (
     <Box sx={{ width: '100%' }}>
@@ -43,33 +74,58 @@ function CategoryMenu() {
         <Box>
           <FormControl>
             {/* radio for Categories */}
-            <FormLabel id="radio-buttons-group-label">Product Category</FormLabel>
-            <RadioGroup
-              aria-labelledby="radio-buttons-group-label"
-              defaultValue="All"
+            <FormLabel id="product-category-group-label">Product Category</FormLabel>
+            <FormGroup
+              aria-labelledby="product-category-group"
               name="radio-buttons-group"
-              value={categoryValue}
               onChange={handleCategoryValueChange}
             >
-              <FormControlLabel value="All" control={<Radio />} label="All" />
-              <FormControlLabel value="Laptop" control={<Radio />} label="Laptop" />
-              <FormControlLabel value="Phone" control={<Radio />} label="Phone" />
-              <FormControlLabel value="Headphone" control={<Radio />} label="Headphone" />
-              <FormControlLabel value="Pad" control={<Radio />} label="Pad" />
-            </RadioGroup>
+              <FormControlLabel value="Laptop" control={<Checkbox />} label="Laptop" />
+              <FormControlLabel value="Phone" control={<Checkbox />} label="Phone" />
+              <FormControlLabel value="Headphone" control={<Checkbox />} label="Headphone" />
+              <FormControlLabel value="Pad" control={<Checkbox />} label="Pad" />
+            </FormGroup>
           </FormControl>
         </Box>
+        {/* <Box>
+          <FormLabel id="checkbox-store-group-label">Check Store Inventory</FormLabel>
+          <FormGroup 
+            aria-labelledby="checkbox-group-label"
+            onChange={handleStoreValueChange}>
+            <FormControlLabel control={<Checkbox />} value="Best Buy - Downtown"  label="Best Buy - Downtown" />
+            <FormControlLabel control={<Checkbox />} value="Best Buy - Midtown"  label="Best Buy - Midtown" />
+            <FormControlLabel control={<Checkbox />} value="Best Buy - plus" label="Best Buy - plus" />
+          </FormGroup>
+        </Box> */}
         <Box>
           {/* All the checkbox for Store Inventory */}
-          <FormLabel id="checkbox-group-label">Check Store Inventory</FormLabel>
-          <FormGroup aria-labelledby="checkbox-group-label">
-            <FormControlLabel control={<Checkbox />} value="Best Buy - Downtown" onChange={handleStoreValueChange} label="Best Buy - Downtown" />
-            <FormControlLabel control={<Checkbox />} value="Best Buy - Midtown" onChange={handleStoreValueChange} label="Best Buy - Midtown" />
-            <FormControlLabel control={<Checkbox />} value="Best Buy - plus" onChange={handleStoreValueChange} label="Best Buy - plus" />
+          <FormLabel id="checkbox-store-group-label">Brands</FormLabel>
+          <FormGroup 
+            aria-labelledby="checkbox-group-label"
+            onChange={handleBrandsValueChange}>
+            <FormControlLabel control={<Checkbox />} value="Alienware"  label="Alienware" />
+            <FormControlLabel control={<Checkbox />} value="Lenovo"  label="Lenovo" />
+            <FormControlLabel control={<Checkbox />} value="MSI" label="MSI" />
+            <FormControlLabel control={<Checkbox />} value="Acer" label="Acer" />
+            <FormControlLabel control={<Checkbox />} value="Dell" label="Dell" />
+            <FormControlLabel control={<Checkbox />} value="Samsung" label="Samsung" />
+            <FormControlLabel control={<Checkbox />} value="ASUS" label="ASUS" />
+            <FormControlLabel control={<Checkbox />} value="Google" label="Google" />
+            <FormControlLabel control={<Checkbox />} value="Motorola" label="Motorola" />
           </FormGroup>
         </Box>
-        
-        <Box>Item 3</Box>
+        <Box
+          component="form"
+          sx={{
+            '& > :not(style)': { mt: 2 },
+          }}
+          noValidate
+          autoComplete="off"
+        >
+          <FormLabel id="Price-Label">Price</FormLabel>
+          <TextField id="minPrice" label="Min Price" variant="outlined" value={minPrice} onChange={handleMinPriceChange} onBlur={handleBlur}/>
+          <TextField id="maxPrice" label="Max Price" variant="outlined" value={maxPrice} onChange={handleMaxPriceChange} onBlur={handleBlur}/>
+        </Box>
       </Stack>
     </Box>
 
