@@ -1,2 +1,2 @@
-# 2024_LeetCode_Bootcamp_TechCompare_Fontend
-2024_LeetCode_Bootcamp_TechCompare_Fontend
+# 2024_LeetCode_Bootcamp_TechCompare_Frontend
+2024_LeetCode_Bootcamp_TechCompare_Frontend
