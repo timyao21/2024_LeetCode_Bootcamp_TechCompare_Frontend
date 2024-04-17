@@ -42,6 +42,7 @@ function CategoryMenu() {
       <Stack spacing={2}>
         <Box>
           <FormControl>
+            {/* radio for Categories */}
             <FormLabel id="radio-buttons-group-label">Product Category</FormLabel>
             <RadioGroup
               aria-labelledby="radio-buttons-group-label"
@@ -59,6 +60,7 @@ function CategoryMenu() {
           </FormControl>
         </Box>
         <Box>
+          {/* All the checkbox for Store Inventory */}
           <FormLabel id="checkbox-group-label">Check Store Inventory</FormLabel>
           <FormGroup aria-labelledby="checkbox-group-label">
             <FormControlLabel control={<Checkbox />} value="Best Buy - Downtown" onChange={handleStoreValueChange} label="Best Buy - Downtown" />
@@ -66,6 +68,7 @@ function CategoryMenu() {
             <FormControlLabel control={<Checkbox />} value="Best Buy - plus" onChange={handleStoreValueChange} label="Best Buy - plus" />
           </FormGroup>
         </Box>
+        
         <Box>Item 3</Box>
       </Stack>
     </Box>

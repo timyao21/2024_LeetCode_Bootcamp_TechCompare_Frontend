@@ -20,14 +20,13 @@ const defaultTheme = createTheme();
 
 export default function SignUp() {
 
-  const [user, setUser] = useState([]);
-  const [checkUser, setcheckUser] = useState([]);
+  const [user, setUser] = useState(null);
   const [showAlert, setShowAlert] = useState(false);
+
   // handle submit
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    // print the form
     console.log({
       email: data.get('email'),
       password: data.get('password'),
@@ -39,24 +38,22 @@ export default function SignUp() {
     };
 
     //API url
-    // const apiUrlgetUser = `http://localhost:8080/techCompare/User/getUser?email=${encodeURIComponent(data.get('email'))}`;
-    const apiUrlRegister = `http://localhost:8080/techCompare/user/register=${encodeURIComponent(data.get('email'))}`;
+    const apiUrlRegister = `http://localhost:8080/techCompare/user/register`;
 
-    // check if the email exist in the database
-    axios.get(apiUrlRegister)
-    .then(response => {
-      setUser(response.data);
-      console.log(response.data)// check if can not the email, user able to create a account
-      if (user) {
-        setShowAlert(false);
-      }
-      else{
-        setShowAlert(true);
-      }
-    })
-    .catch(error => {
-      console.log('Response parsing failed. Error: ', error);
-    });
+    axios.get(apiUrlRegister, singupRequest.email)
+      .then(response => {
+        setUser(response.data);
+        console.log(response.data)
+        if (response.data) {
+          setShowAlert(false);
+        }
+        else{
+          setShowAlert(true);
+        }
+      })
+      .catch(error => {
+        console.log('Response parsing failed. Error: ', error);
+      });
   };
 
   return (

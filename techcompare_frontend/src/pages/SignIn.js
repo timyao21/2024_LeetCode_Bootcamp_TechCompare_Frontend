@@ -68,6 +68,7 @@ export default function SignIn() {
             alignItems: 'center',
           }}
         >
+          {/* Alert */}
           {showAlert && <Alert severity="warning">You have entered an invalid username or password</Alert>}
           <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
             {/* <LockOutlinedIcon /> */}
