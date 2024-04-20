@@ -26,18 +26,18 @@ function CategoryMenu({onCategoriesChange, onBrandsChange, onMinPriceChange, onM
 
   const handleMinPriceChange = (event) => {
     setMinPrice(event.target.value);
-    onMinPriceChange(event.target.value)
+    // onMinPriceChange(event.target.value)
   };
 
   const handleMaxPriceChange = (event) => {
     setMaxPrice(event.target.value);
-    onMaxPriceChange(event.target.value)
+    // onMaxPriceChange(event.target.value)
   };
 
   const handleBlur = () => {
-    // console.log('Min Price:', minPrice);
-    // console.log('Max Price:', maxPrice);
     // Here you can also perform other actions like validation or state updates
+    onMinPriceChange(minPrice)
+    onMaxPriceChange(maxPrice)
   };
 
   const handleCategoryValueChange = (event) => {
@@ -47,25 +47,12 @@ function CategoryMenu({onCategoriesChange, onBrandsChange, onMinPriceChange, onM
     onCategoriesChange(newCategories);  // Invoke the passed function from parent
   };
 
-  // const handleStoreValueChange = (event) => {
-  //   const { checked, value } = event.target;
-  //   setStoreValue(prev => 
-  //     checked 
-  //       ? [...prev, value] 
-  //       : prev.filter(item => item !== value)
-  //   );
-  // };
-
   const handleBrandsValueChange = (event) => {
     const { checked, value } = event.target;
     const newBrands = checked ? [...brandsValue, value] : brandsValue.filter(item => item !== value);
     setBrandsValue(newBrands);
     onBrandsChange(newBrands);  // Invoke the passed function from parent
   };
-
-  // React.useEffect(() => {
-  //   console.log(storeValue); // Logs the array of selected stores
-  // }, [storeValue]);
 
 
   return (
