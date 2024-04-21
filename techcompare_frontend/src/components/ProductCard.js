@@ -9,7 +9,7 @@ import { Link } from 'react-router-dom';
 
 import image123 from '../testDataSet/image1.jpg'
   
-export default function Product({id, productName, imageLink, price}) {
+export default function Product({id, productName, imageLink, price, ram, storage}) {
 
     return (
         <Card sx={{ maxWidth: 345 }}>
@@ -21,12 +21,23 @@ export default function Product({id, productName, imageLink, price}) {
             alt="Product"
             />
             <CardContent>
-            <Typography gutterBottom variant="h5" component="div">
-                {productName}
-            </Typography>
-            <Typography variant="body2" color="text.secondary">
-                ${price}
-            </Typography>
+                <Typography gutterBottom variant="h5" component="div">
+                    {productName}
+                </Typography>
+                <Typography variant="body1" color="text.secondary">
+                    ${price}
+                </Typography>
+                {ram && (
+                    <Typography variant="body2" color="text.secondary">
+                        RAM: {ram}
+                    </Typography>
+                )}
+                {ram && (
+                    <Typography variant="body2" color="text.secondary">
+                        Storage: {storage}
+                    </Typography>
+                )}
+
             </CardContent>
         </CardActionArea>
         <CardActions>

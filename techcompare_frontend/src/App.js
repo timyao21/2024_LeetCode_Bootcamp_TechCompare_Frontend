@@ -13,6 +13,7 @@ import NoPage from "./pages/NoPage.js"
 import SignUp from './pages/SignUp.js';
 import SignIn from './pages/SignIn.js';
 import ProductPage from "./pages/ProductPage.js"
+import Search from "./pages/Search.js"
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
         <Route path="/product/:id" element={<ProductPage />} />
         <Route path="/signup" element={<SignUp />} />
         <Route path="/signin" element={<SignIn />} />
+        <Route path="/search" element={<Search />} />
         <Route path="*" element={<NoPage />} />
       </Routes>
     </BrowserRouter>
