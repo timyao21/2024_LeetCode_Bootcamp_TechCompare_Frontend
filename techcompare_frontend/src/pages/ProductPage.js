@@ -13,6 +13,7 @@ export default function ProductPage() {
     const [product, setProduct] = React.useState([]);
     const [review, setReview] = React.useState([]);
     const [priceHistory, setPriceHistory] = React.useState([]);
+    const [specifications, setSpecifications] = React.useState([]);
 
 
     useEffect(() => {
@@ -24,6 +25,7 @@ export default function ProductPage() {
                 setProduct(response.data[0]);
                 setReview(response.data[0].review)
                 setPriceHistory(response.data[0].priceHistory)
+                setSpecifications(response.data[0].specifications)
                 console.log((response.data[0].review))
             } catch (error) {
                 console.error('Error fetching data: ', error);
@@ -52,12 +54,21 @@ export default function ProductPage() {
                     $ {product.currentPrice}
                 </Typography>
                 <Box sx={{pt: 3}}>
-                    <Typography variant="subtitle1" component="h2">
+                    <Typography variant="h6" component="h2">
                         Specifications:
                     </Typography>
-                    <Typography variant="body1">
-                        Model: {product.model}
-                    </Typography>
+                    <Box sx={{pl:3, pt:1}}>
+                        {Object.entries(specifications).map(([key, value]) => {
+                            if (value) { // This will check if the value is not null and not an empty string
+                                return (
+                                    <Typography variant="body1" sx={{ m: 0.5 }} key={key}>
+                                        {`${key.charAt(0).toUpperCase() + key.slice(1)}: ${value}`}
+                                    </Typography>
+                                );
+                            }
+                            return null; // If value is null, return null to render nothing for this entry
+                        })}
+                    </Box>
                 </Box>
             </Grid>
         </Grid>
@@ -69,7 +80,7 @@ export default function ProductPage() {
         <Stack spacing={2} sx={{mt:1, p:2}}>
             {review.map((item, index) => (
                 <Paper elevation={2} sx={{p:2}}>
-                    <Typography>{item.userId}</Typography>
+                    <Typography>User: {item.email}</Typography>
                     <Typography>{item.comment}</Typography>
                 </Paper>
                 ))}
@@ -86,8 +97,6 @@ export default function ProductPage() {
                     <Typography>{item.price}</Typography>
                 </Paper>
                 ))}
-
-        {/* <p>{product.priceHistory[0].time}: {product.priceHistory[0].price}</p>  */}
     </Container>
   );
 }
