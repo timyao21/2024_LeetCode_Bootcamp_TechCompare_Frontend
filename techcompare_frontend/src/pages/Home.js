@@ -68,7 +68,7 @@ function Home() {
 
 
     return(
-        <div style={{padding:"8%"}}>
+        <div style={{padding:"8%"}} className = "bg-silver">
             {/* Outer Grid Container */}
             <Grid container spacing={2}>
                 {/* Menu on the Left */}
