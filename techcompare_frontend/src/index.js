@@ -16,7 +16,7 @@ const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
     <Nav />
-    <App className = "bg-silver"/>
+    <App />
   </React.StrictMode>
 );
 
