@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import { Box, Card, CardContent, CardMedia, Grid, Paper, Typography } from '@mui/material';
+import { Box, Card, CardContent, CardMedia, Grid, Paper, Typography} from '@mui/material';
+import { LineChart } from '@mui/x-charts/LineChart';
 import Container from '@mui/material/Container';
 import axios from 'axios';
 import Divider from '@mui/material/Divider';
@@ -26,7 +27,7 @@ export default function ProductPage() {
                 setReview(response.data[0].review)
                 setPriceHistory(response.data[0].priceHistory)
                 setSpecifications(response.data[0].specifications)
-                console.log((response.data[0].review))
+                console.log(typeof(response.data[0].priceHistory[0].time))
             } catch (error) {
                 console.error('Error fetching data: ', error);
                 // Handle errors here based on your application's needs
@@ -34,9 +35,11 @@ export default function ProductPage() {
         };
         console.log("fetchData")
         fetchData();
-    }, [id]);
 
-    // console.log("Cur:", product.priceHistory[0].price)
+        
+
+        
+    }, [id]);
 
   return (
     <Container maxWidth="md" sx={{pt: 5}}>
@@ -91,12 +94,24 @@ export default function ProductPage() {
         <Typography variant="h4">
             Price History:
         </Typography>
+        {/* <Stack spacing={2} sx={{mt:1, p:2}}>
         {priceHistory.map((item, index) => (
                 <Paper elevation={2} sx={{p:2}}>
                     <Typography>{item.time}</Typography>
                     <Typography>{item.price}</Typography>
                 </Paper>
                 ))}
+        </Stack> */}
+        <LineChart
+      xAxis={[{ scaleType: 'point', data: priceHistory.map(obj => obj.time.substr(0, 10)) }]}
+      series={[
+        {
+          data: priceHistory.map(obj => obj.price),
+        },
+      ]}
+      width={500}
+      height={500}
+    />
     </Container>
   );
 }
