@@ -8,6 +8,7 @@ import Divider from '@mui/material/Divider';
 import Stack from '@mui/material/Stack';
 
 import PriceHistory from '../components/PriceHistory';
+import RateReview from '../components/RateReview';
 
 
 export default function ProductPage() {
@@ -23,12 +24,6 @@ export default function ProductPage() {
         const fetchData = async () => {
             try {
                 console.log(id)
-                // const response = await axios.get('http://localhost:8080/techCompare/products/search', {params:{name: id}});
-                // setProduct(response.data[0]);
-                // setReview(response.data[0].review)
-                // setPriceHistory(response.data[0].priceHistory)
-                // setSpecifications(response.data[0].specifications)
-                // console.log((response.data[0].review))
                 
                 const url = `http://localhost:8080/techCompare/products/${id}`;
                 console.log(url);
@@ -87,6 +82,9 @@ export default function ProductPage() {
         <Typography variant="h4">
             Review:
         </Typography>
+        
+        <RateReview productId={product.productStringId} />
+
         <Stack spacing={2} sx={{mt:1, p:2}}>
             {review.map((item, index) => (
                 <Paper elevation={2} sx={{p:2}}>
