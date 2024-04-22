@@ -22,7 +22,7 @@ function getLabelText(value) {
 }
 
 export default function RateReview() {
-  //const { id } = useParams();
+  const { id } = useParams();
   //console.log("we got id " + id);
 
   const [value, setValue] = React.useState(2);
@@ -47,8 +47,7 @@ export default function RateReview() {
         time: new Date(), 
         email: "user123@example.com" // Static email for example; this can be dynamic if needed
       };
-      const id = "2";
-
+      
       const response = await axios.post(url, body, {params: { id }});
       console.log("wrote data:" + response.data);
       setReviewText('');  // Clear the text field after successful submission
