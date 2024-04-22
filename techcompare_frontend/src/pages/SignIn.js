@@ -1,6 +1,6 @@
 import * as React from 'react';
 import axios from 'axios';
-import { useState } from 'react';
+import { useState, useContext } from 'react';
 
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
@@ -15,13 +15,17 @@ import Alert from '@mui/material/Alert';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { useNavigate } from 'react-router-dom'; 
+import { UserContext } from '../context/UserContext';
 
 const defaultTheme = createTheme();
 
 export default function SignIn() {
-
+  const navigate = useNavigate();
   const [user, setUser] = useState(false);
+  const [email, setEmail] = useState(false);
   const [showAlert, setShowAlert] = useState(false);
+  const { user2, login, logout } = useContext(UserContext); // 使用 useContext 钩子访问 Context
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -42,9 +46,15 @@ export default function SignIn() {
     axios.post(apiUrl, singinRequest)
     .then(response => {
         setUser(response.data);
+        console.log(123); // tr
         console.log(response.data); // true or false
+        localStorage.setItem('email', data.get('email'));
+        console.log(localStorage.getItem('email'));
         if (response.data){
+          console.log(data.get('email'));
+          login(data.get('email'));
           setShowAlert(false);
+          navigate('/');
         }
         else{
           setShowAlert(true);
