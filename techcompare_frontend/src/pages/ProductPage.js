@@ -9,6 +9,8 @@ import Stack from '@mui/material/Stack';
 
 import PriceHistory from '../components/PriceHistory';
 
+import RateReview from '../components/RateReview';
+
 
 export default function ProductPage() {
     const { id } = useParams(); // Get the `id` param from the URL
@@ -35,6 +37,13 @@ export default function ProductPage() {
                 setPriceHistory(response.data.priceHistory)
                 setSpecifications(response.data.specifications)
                 console.log((response.data.review))
+                const response = await axios.get('http://localhost:8080/techCompare/products/search', {params:{name: id}}); // Adjust the URL based on your server
+                console.log("data:" + response.data)
+                setProduct(response.data[0]);
+                setReview(response.data[0].review)
+                setPriceHistory(response.data[0].priceHistory)
+                setSpecifications(response.data[0].specifications)
+                console.log((response.data[0].review))
             } catch (error) {
                 console.error('Error fetching data: ', error);
                 // Handle errors here based on your application's needs
@@ -84,6 +93,9 @@ export default function ProductPage() {
         <Typography variant="h4">
             Review:
         </Typography>
+
+        <RateReview productId={product.productStringId} />
+
         <Stack spacing={2} sx={{mt:1, p:2}}>
             {review.map((item, index) => (
                 <Paper elevation={2} sx={{p:2}}>
