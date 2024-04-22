@@ -11,7 +11,20 @@ import axios from 'axios';
 import { UserContext } from '../context/UserContext';
 
 import image123 from '../testDataSet/image1.jpg'
-  
+
+const cardAreaStyle = {
+    top: "0",
+    height: "80%",
+    paddingBottom: "20%",
+}
+
+const cardActionStyle = {
+    position: "relative",
+    bottom: "5%",
+    paddingTop: "20%",
+    height: "20%",
+}
+
 export default function Product({id, productName, imageLink, price, ram, storage}) {
     const navigate = useNavigate();
     const { user2, login, logout } = useContext(UserContext);
@@ -31,6 +44,11 @@ export default function Product({id, productName, imageLink, price, ram, storage
             // change to user email
             // const email = "user123@example.com";
             const email = user2.email;
+            if (email == '') {
+                alert("Sign in First!");
+                console.log("Email is null, exiting function.");
+                return;  // 当邮箱为空时，直接返回不再执行之后的代码
+            }
             console.log("addtowishlist");
             console.log('Sending request with:', { email: email, productId: id });
             const response = await axios.post('http://localhost:8080/techCompare/user/addWishlist', null, {
@@ -50,8 +68,9 @@ export default function Product({id, productName, imageLink, price, ram, storage
 
 
     return (
-        <Card sx={{ maxWidth: 345 }}>
-        <CardActionArea component={Link} to={`/product/${productName}`}>
+
+        <Card sx={{ maxWidth: 345, height: 360 }}>
+        <CardActionArea component={Link} to={`/product/${id}`} style = {cardAreaStyle}>
             <CardMedia
             component="img"
             height="140"

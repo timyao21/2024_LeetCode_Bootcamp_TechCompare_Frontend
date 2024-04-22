@@ -68,14 +68,14 @@ function Home() {
 
 
     return(
-        <div style={{padding:"8%"}}>
+        <div style={{padding:"8%"}} className = "bg-color1">
             {/* Outer Grid Container */}
             <Grid container spacing={2}>
                 {/* Menu on the Left */}
                 <Grid item xs={2}>
                     <CategoryMenu onCategoriesChange={handleCategoriesChange} onBrandsChange={handleBrandsChange} onMinPriceChange={handleMinPriceChange} onMaxPriceChange={handleMaxPriceChange}/>
                 </Grid>
-                {/* Second Item (Container for Nested Grid) */}
+                {/* Second Item (Container for prouduct display) */}
                 <Grid item xs={10}>
                     {/* Nested Grid Container */}
                     <Grid container spacing={2}>

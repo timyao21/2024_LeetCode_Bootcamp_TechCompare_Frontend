@@ -59,7 +59,7 @@ function BasicExample() {
 
 
   return (
-    <Navbar expand="lg" className="bg-body-tertiary">
+    <Navbar expand="lg" className="bg-color2">
       <Container>
         <Navbar.Brand href="/">Tech Compare</Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
