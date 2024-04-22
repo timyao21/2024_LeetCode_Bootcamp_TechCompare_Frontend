@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import { Box, Card, CardContent, CardMedia, Grid, Paper, Typography } from '@mui/material';
+import { Box, Card, CardContent, CardMedia, Grid, Paper, Typography} from '@mui/material';
+import { LineChart } from '@mui/x-charts/LineChart';
 import Container from '@mui/material/Container';
 import axios from 'axios';
 import Divider from '@mui/material/Divider';
@@ -16,7 +17,6 @@ export default function ProductPage() {
     const [review, setReview] = React.useState([]);
     const [priceHistory, setPriceHistory] = React.useState([]);
     const [specifications, setSpecifications] = React.useState([]);
-
 
     useEffect(() => {
         // fetch all products and console.log it 
@@ -42,8 +42,8 @@ export default function ProductPage() {
         };
         console.log("fetchData")
         fetchData();
+    
     }, [id]);
-
 
   return (
     <Container maxWidth="md" sx={{pt: 5}}>
@@ -98,13 +98,24 @@ export default function ProductPage() {
         <Typography variant="h4">
             Price History:
         </Typography>
+        {/* <Stack spacing={2} sx={{mt:1, p:2}}>
         {priceHistory.map((item, index) => (
                 <Paper elevation={2} sx={{p:2}}>
                     <Typography>{item.time}</Typography>
                     <Typography>{item.price}</Typography>
                 </Paper>
                 ))}
-        <PriceHistory priceHistory={priceHistory}/>
+        </Stack> */}
+        <LineChart
+      xAxis={[{ scaleType: 'point', data: priceHistory.map(obj => obj.time.substr(0, 10)) }]}
+      series={[
+        {
+          data: priceHistory.map(obj => obj.price),
+        },
+      ]}
+      width={500}
+      height={500}
+    />
     </Container>
   );
 }
