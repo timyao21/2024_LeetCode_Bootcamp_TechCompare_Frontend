@@ -24,7 +24,7 @@ export default function ProductPage() {
         // fetch all products and console.log it 
         const fetchData = async () => {
             try {
-                // console.log(id)
+                console.log(id)
                 // const response = await axios.get('http://localhost:8080/techCompare/products/search', {params:{name: id}});
                 // setProduct(response.data[0]);
                 // setReview(response.data[0].review)
