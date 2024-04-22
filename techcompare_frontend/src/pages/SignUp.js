@@ -27,20 +27,35 @@ export default function SignUp() {
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
+    console.log("signnupppp");
     console.log({
       email: data.get('email'),
       password: data.get('password'),
     });
 
-    const singupRequest = {
-      email: data.get('email'),
-      password: data.get('password')
-    };
+    // const singupRequest = {
+    //   email: data.get('email'),
+    //   password: data.get('password')
+    // };
 
     //API url
     const apiUrlRegister = `http://localhost:8080/techCompare/user/register`;
 
-    axios.get(apiUrlRegister, singupRequest.email)
+  const email = data.get('email');  // 从注册表单获取用户输入的邮箱
+  const password = data.get('password'); // 从注册表单获取用户输入的密码
+  const wishlist = []; // 从注册表单获取用户的愿望清单
+  const firebaseId = ''; // 从注册表单获取用户的 Firebase ID，如果有的话
+
+  // 构造注册请求的用户对象
+  const user = {
+    email: email,
+    password: password,
+    wishlist: wishlist,
+    firebase_id: firebaseId
+    // 其他字段...
+  };
+
+    axios.post(apiUrlRegister, user)
       .then(response => {
         setUser(response.data);
         console.log(response.data)

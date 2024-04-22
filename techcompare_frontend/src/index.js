@@ -6,6 +6,7 @@ import reportWebVitals from './reportWebVitals';
 
 // bootstrap
 import 'bootstrap/dist/css/bootstrap.min.css';
+import { UserProvider } from './context/UserContext';
 
 // components
 import Nav from "./components/NavBar.js"
@@ -13,8 +14,10 @@ import Nav from "./components/NavBar.js"
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
+    <UserProvider>
     <Nav />
     <App />
+    </UserProvider>
   </React.StrictMode>
 );
 
