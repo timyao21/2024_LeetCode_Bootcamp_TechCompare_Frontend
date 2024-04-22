@@ -29,7 +29,10 @@ export default function ProductPage() {
                 // setPriceHistory(response.data[0].priceHistory)
                 // setSpecifications(response.data[0].specifications)
                 // console.log((response.data[0].review))
+<<<<<<< HEAD
                 
+=======
+>>>>>>> send-rate-review
                 const url = `http://localhost:8080/techCompare/products/${id}`;
                 console.log(url);
                 const response = await axios.get(url);
