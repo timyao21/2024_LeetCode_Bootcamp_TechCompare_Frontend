@@ -6,6 +6,8 @@ import reportWebVitals from './reportWebVitals';
 
 // bootstrap
 import 'bootstrap/dist/css/bootstrap.min.css';
+import './index.css';  // This file should @import 'tailwindcss/tailwind.css';
+
 
 // components
 import Nav from "./components/NavBar.js"
