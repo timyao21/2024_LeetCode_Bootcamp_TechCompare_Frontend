@@ -31,19 +31,14 @@ export default function ProductPage() {
                 // setPriceHistory(response.data[0].priceHistory)
                 // setSpecifications(response.data[0].specifications)
                 // console.log((response.data[0].review))
-                const response = await axios.get('http://localhost:8080/techCompare/products/getproduct', {params:{productStringId: id}});
+                const url = `http://localhost:8080/techCompare/products/${id}`;
+                console.log(url);
+                const response = await axios.get(url);
                 setProduct(response.data);
                 setReview(response.data.review)
                 setPriceHistory(response.data.priceHistory)
                 setSpecifications(response.data.specifications)
                 console.log((response.data.review))
-                const response = await axios.get('http://localhost:8080/techCompare/products/search', {params:{name: id}}); // Adjust the URL based on your server
-                console.log("data:" + response.data)
-                setProduct(response.data[0]);
-                setReview(response.data[0].review)
-                setPriceHistory(response.data[0].priceHistory)
-                setSpecifications(response.data[0].specifications)
-                console.log((response.data[0].review))
             } catch (error) {
                 console.error('Error fetching data: ', error);
                 // Handle errors here based on your application's needs
