@@ -8,12 +8,26 @@ import { Button, CardActionArea, CardActions } from '@mui/material';
 import { Link } from 'react-router-dom';
 
 import image123 from '../testDataSet/image1.jpg'
-  
+
+const cardAreaStyle = {
+    top: "0",
+    height: "80%",
+    paddingBottom: "20%",
+}
+
+const cardActionStyle = {
+    position: "relative",
+    bottom: "5%",
+    paddingTop: "20%",
+    height: "20%",
+}
+
 export default function Product({id, productName, imageLink, price, ram, storage}) {
 
     return (
-        <Card sx={{ maxWidth: 345 }}>
-        <CardActionArea component={Link} to={`/product/${productName}`}>
+
+        <Card sx={{ maxWidth: 345, height: 360 }}>
+        <CardActionArea component={Link} to={`/product/${id}`} style = {cardAreaStyle}>
             <CardMedia
             component="img"
             height="140"
@@ -40,7 +54,7 @@ export default function Product({id, productName, imageLink, price, ram, storage
 
             </CardContent>
         </CardActionArea>
-        <CardActions>
+        <CardActions style={cardActionStyle}>
             <Button className="me-auto" size="small" variant="text" color="primary">
                 add WishList
             </Button>

@@ -1,10 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import { Box, Card, CardContent, CardMedia, Grid, Paper, Typography } from '@mui/material';
+import { Box, Card, CardContent, CardMedia, Grid, Paper, Typography} from '@mui/material';
+import { LineChart } from '@mui/x-charts/LineChart';
 import Container from '@mui/material/Container';
 import axios from 'axios';
 import Divider from '@mui/material/Divider';
 import Stack from '@mui/material/Stack';
+
+import PriceHistory from '../components/PriceHistory';
 
 import RateReview from '../components/RateReview';
 
@@ -17,12 +20,23 @@ export default function ProductPage() {
     const [priceHistory, setPriceHistory] = React.useState([]);
     const [specifications, setSpecifications] = React.useState([]);
 
-
     useEffect(() => {
         // fetch all products and console.log it 
         const fetchData = async () => {
             try {
                 // console.log(id)
+                // const response = await axios.get('http://localhost:8080/techCompare/products/search', {params:{name: id}});
+                // setProduct(response.data[0]);
+                // setReview(response.data[0].review)
+                // setPriceHistory(response.data[0].priceHistory)
+                // setSpecifications(response.data[0].specifications)
+                // console.log((response.data[0].review))
+                const response = await axios.get('http://localhost:8080/techCompare/products/getproduct', {params:{productStringId: id}});
+                setProduct(response.data);
+                setReview(response.data.review)
+                setPriceHistory(response.data.priceHistory)
+                setSpecifications(response.data.specifications)
+                console.log((response.data.review))
                 const response = await axios.get('http://localhost:8080/techCompare/products/search', {params:{name: id}}); // Adjust the URL based on your server
                 console.log("data:" + response.data)
                 setProduct(response.data[0]);
@@ -37,9 +51,8 @@ export default function ProductPage() {
         };
         console.log("fetchData")
         fetchData();
+    
     }, [id]);
-
-    // console.log("Cur:", product.priceHistory[0].price)
 
   return (
     <Container maxWidth="md" sx={{pt: 5}}>
@@ -97,12 +110,24 @@ export default function ProductPage() {
         <Typography variant="h4">
             Price History:
         </Typography>
+        {/* <Stack spacing={2} sx={{mt:1, p:2}}>
         {priceHistory.map((item, index) => (
                 <Paper elevation={2} sx={{p:2}}>
                     <Typography>{item.time}</Typography>
                     <Typography>{item.price}</Typography>
                 </Paper>
                 ))}
+        </Stack> */}
+        <LineChart
+      xAxis={[{ scaleType: 'point', data: priceHistory.map(obj => obj.time.substr(0, 10)) }]}
+      series={[
+        {
+          data: priceHistory.map(obj => obj.price),
+        },
+      ]}
+      width={500}
+      height={500}
+    />
     </Container>
   );
 }
