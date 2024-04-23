@@ -12,6 +12,19 @@ import { Link } from 'react-router-dom';
 import PriceHistory from '../components/PriceHistory';
 import RateReview from '../components/RateReview';
 
+// import product images
+import laptopImage from '../images/laptop2.jpg';
+import phoneImage from '../images/phone2.png';
+import headphoneImage from '../images/headphone2.jpeg';
+import padImage from '../images/pad2.jpg';
+
+
+const categoryImages = {
+    Laptop: laptopImage,
+    Phone: phoneImage,
+    Headphone: headphoneImage,
+    Pad:padImage,
+  };
 
 export default function ProductPage() {
     const { id } = useParams(); // Get the `id` param from the URL
@@ -44,13 +57,22 @@ export default function ProductPage() {
         fetchData();
     }, [id]);
 
+    const image = categoryImages[product.category] || phoneImage;  // Default to laptop if category is undefined
+
   return (
     <Container maxWidth="md" sx={{pt: 5}}>
-        <Grid container spacing={2}>
+        <Grid container spacing={8}>
             <Grid item xs={6}>
-                <p>Image</p>
+                <Card>
+                    <CardMedia
+                        component="img"
+                        height="auto"
+                        image={image} 
+                        alt={product.productName} 
+                    />
+                </Card>
             </Grid>
-            <Grid item xs={6}>
+            <Grid item xs={6} sx={{ pl: 4 }}>
                 {/* <p>id: {product.productStringId}</p> */}
 
                 <Typography variant="h3" component="h2" sx={{pb: 5}}>
