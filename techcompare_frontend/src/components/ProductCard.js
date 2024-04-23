@@ -14,8 +14,8 @@ import image123 from '../testDataSet/image1.jpg'
 
 const cardAreaStyle = {
     top: "0",
-    height: "80%",
-    paddingBottom: "20%",
+    height: "85%",
+    paddingBottom: "15%",
 }
 
 const cardActionStyle = {
