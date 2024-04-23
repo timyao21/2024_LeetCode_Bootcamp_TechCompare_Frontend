@@ -74,10 +74,10 @@ function Home() {
                                 <ProductCard 
                                     id={product.productStringId}
                                     productName={product.productName}
-                                    imageLink={product.imageLink}
                                     price={product.currentPrice}
                                     ram={product.specifications.ram}
-                                    storage={product.specifications.storage}/>
+                                    storage={product.specifications.storage}
+                                    category = {product.category}/>
                             </Grid>
                         ))}
                     </Grid>
