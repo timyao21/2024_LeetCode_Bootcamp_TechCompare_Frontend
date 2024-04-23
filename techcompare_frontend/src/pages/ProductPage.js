@@ -108,15 +108,15 @@ export default function ProductPage() {
                 ))}
         </Stack> */}
         <LineChart
-      xAxis={[{ scaleType: 'point', data: priceHistory.map(obj => obj.time.substr(0, 10)) }]}
-      series={[
-        {
-          data: priceHistory.map(obj => obj.price),
-        },
-      ]}
-      width={500}
-      height={500}
-    />
+            xAxis={[{ scaleType: 'point', data: priceHistory.map(obj => obj.time.substr(0, 10)) }]}
+            series={[
+                {
+                data: priceHistory.map(obj => obj.price),
+                },
+            ]}
+            width={500}
+            height={500}
+            />
     </Container>
   );
 }
