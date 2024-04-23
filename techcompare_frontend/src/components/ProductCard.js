@@ -10,7 +10,20 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { UserContext } from '../context/UserContext';
 
-import image123 from '../testDataSet/image1.jpg'
+// import product images
+import laptopImage from '../images/laptop.jpg';
+import phoneImage from '../images/phone.png';
+import headphoneImage from '../images/headphone.png';
+import padImage from '../images/pad.png';
+
+
+// Category to Image mapping
+const categoryImages = {
+    Laptop: laptopImage,
+    Phone: phoneImage,
+    Headphone: headphoneImage,
+    Pad:padImage,
+};
 
 const cardAreaStyle = {
     top: "0",
@@ -25,7 +38,9 @@ const cardActionStyle = {
     height: "20%",
 }
 
-export default function Product({id, productName, imageLink, price, ram, storage}) {
+export default function Product({id, productName, price, ram, storage, category}) {
+    console.log(category);
+    
     const navigate = useNavigate();
     const { user2, login, logout } = useContext(UserContext);
 
@@ -64,6 +79,8 @@ export default function Product({id, productName, imageLink, price, ram, storage
             console.error('Error adding product to wishlist:', error);
         }
     };
+
+    const image = categoryImages[category] || phoneImage;  // Default to laptop if category is undefined
     
 
 
@@ -74,7 +91,7 @@ export default function Product({id, productName, imageLink, price, ram, storage
             <CardMedia
             component="img"
             height="140"
-            image = {image123}
+            image = {image}
             alt="Product"
             />
             <CardContent>
