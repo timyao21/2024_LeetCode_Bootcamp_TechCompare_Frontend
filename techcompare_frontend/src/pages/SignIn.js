@@ -1,6 +1,6 @@
 import * as React from 'react';
 import axios from 'axios';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
@@ -9,19 +9,36 @@ import TextField from '@mui/material/TextField';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
 import Link from '@mui/material/Link';
+import { Navigate } from 'react-router-dom';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import Alert from '@mui/material/Alert';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { Collapse } from '@mui/material';
+import { setToken, setEmail } from '../app/userInfoReducer';
+import { useSelector, useDispatch } from 'react-redux';
 
 const defaultTheme = createTheme();
 
 export default function SignIn() {
-
+  // const token = useSelector(state => state.userInfo.token)
+  const dispatch = useDispatch()
   const [user, setUser] = useState(false);
   const [showAlert, setShowAlert] = useState(false);
+  const [open, setOpen] = useState(false)
+
+  useEffect(() => {
+    if(showAlert){
+      setOpen(open => true);
+      const timeoutId = setTimeout(() => {
+          setOpen(open => false)
+          setShowAlert(showAlert => false)
+      }, 2000)
+      return () => clearTimeout(timeoutId)
+    }
+  }, [showAlert])
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -34,25 +51,24 @@ export default function SignIn() {
       password: data.get('password')
     };
 
-    console.log({
-      email: data.get('email'),
-      password: data.get('password'),
-    });
+    // console.log({
+    //   email: data.get('email'),
+    //   password: data.get('password'),
+    // });
 
     axios.post(apiUrl, singinRequest)
     .then(response => {
-        setUser(response.data);
-        console.log(response.data); // true or false
+        dispatch(setToken(response.headers)); // true or false
         if (response.data){
-          setShowAlert(false);
+          setUser(true);
         }
         else{
-          setShowAlert(true);
+          setShowAlert(showAlert => true);
         }
     })
     .catch(error => {
         console.log('Response parsing failed. Error: ', error);
-        setShowAlert(true);
+        setShowAlert(showAlert => true);
     });
   };
 
@@ -68,8 +84,12 @@ export default function SignIn() {
             alignItems: 'center',
           }}
         >
-          {/* Alert */}
-          {showAlert && <Alert severity="warning">You have entered an invalid username or password</Alert>}
+          {
+            user ? <Navigate replace to="/"/> : 
+            <Collapse in={open}>
+              <Alert severity="warning">You have entered an invalid username or password</Alert>
+            </Collapse>
+          }
           <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
             {/* <LockOutlinedIcon /> */}
           </Avatar>

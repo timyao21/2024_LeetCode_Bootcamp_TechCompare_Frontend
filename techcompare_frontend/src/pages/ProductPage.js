@@ -6,6 +6,8 @@ import Container from '@mui/material/Container';
 import axios from 'axios';
 import Divider from '@mui/material/Divider';
 import Stack from '@mui/material/Stack';
+import Button from '@mui/material/Button';
+import { Link } from 'react-router-dom';
 
 
 export default function ProductPage() {
@@ -35,9 +37,6 @@ export default function ProductPage() {
         };
         console.log("fetchData")
         fetchData();
-
-        
-
         
     }, [id]);
 
@@ -71,6 +70,10 @@ export default function ProductPage() {
                             }
                             return null; // If value is null, return null to render nothing for this entry
                         })}
+                        <Divider sx={{m:2}}></Divider>
+                        <Button variant = "contained" component={Link} to={`/product/compare/${product.productStringId}`}>
+                            Compare similar products 
+                        </Button>
                     </Box>
                 </Box>
             </Grid>
