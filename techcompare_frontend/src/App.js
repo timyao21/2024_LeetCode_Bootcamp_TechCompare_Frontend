@@ -14,6 +14,7 @@ import SignUp from './pages/SignUp.js';
 import SignIn from './pages/SignIn.js';
 import ProductPage from "./pages/ProductPage.js"
 import Search from "./pages/Search.js"
+import TechCompare from "./pages/techCompare.js"
 import WishListPage from './pages/WishListPage.js';
 
 function App() {
@@ -27,6 +28,7 @@ function App() {
         <Route path="/search" element={<Search />} />
         <Route path="/wishlistpage/:id" element={<WishListPage />} />
         <Route path="*" element={<NoPage />} />
+        <Route path="/product/compare/:id" element={<TechCompare />}/>
       </Routes>
     </BrowserRouter>
   );

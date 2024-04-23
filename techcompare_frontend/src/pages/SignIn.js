@@ -1,6 +1,6 @@
 import * as React from 'react';
 import axios from 'axios';
-import { useState, useContext } from 'react';
+import { useState, useEffect, useContext } from 'react';
 
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
@@ -9,6 +9,7 @@ import TextField from '@mui/material/TextField';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
 import Link from '@mui/material/Link';
+import { Navigate } from 'react-router-dom';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import Alert from '@mui/material/Alert';
@@ -38,10 +39,10 @@ export default function SignIn() {
       password: data.get('password')
     };
 
-    console.log({
-      email: data.get('email'),
-      password: data.get('password'),
-    });
+    // console.log({
+    //   email: data.get('email'),
+    //   password: data.get('password'),
+    // });
 
     axios.post(apiUrl, singinRequest)
     .then(response => {
@@ -57,12 +58,12 @@ export default function SignIn() {
           navigate('/');
         }
         else{
-          setShowAlert(true);
+          setShowAlert(showAlert => true);
         }
     })
     .catch(error => {
         console.log('Response parsing failed. Error: ', error);
-        setShowAlert(true);
+        setShowAlert(showAlert => true);
     });
   };
 
@@ -78,8 +79,12 @@ export default function SignIn() {
             alignItems: 'center',
           }}
         >
-          {/* Alert */}
-          {showAlert && <Alert severity="warning">You have entered an invalid username or password</Alert>}
+          {
+            user ? <Navigate replace to="/"/> : 
+            <Collapse in={open}>
+              <Alert severity="warning">You have entered an invalid username or password</Alert>
+            </Collapse>
+          }
           <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
             {/* <LockOutlinedIcon /> */}
           </Avatar>
