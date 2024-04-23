@@ -1,6 +1,6 @@
 import * as React from 'react';
 import axios from 'axios';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
 
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
@@ -16,29 +16,17 @@ import Alert from '@mui/material/Alert';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import { Collapse } from '@mui/material';
-import { setToken, setEmail } from '../app/userInfoReducer';
-import { useSelector, useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom'; 
+import { UserContext } from '../context/UserContext';
 
 const defaultTheme = createTheme();
 
 export default function SignIn() {
-  // const token = useSelector(state => state.userInfo.token)
-  const dispatch = useDispatch()
+  const navigate = useNavigate();
   const [user, setUser] = useState(false);
+  const [email, setEmail] = useState(false);
   const [showAlert, setShowAlert] = useState(false);
-  const [open, setOpen] = useState(false)
-
-  useEffect(() => {
-    if(showAlert){
-      setOpen(open => true);
-      const timeoutId = setTimeout(() => {
-          setOpen(open => false)
-          setShowAlert(showAlert => false)
-      }, 2000)
-      return () => clearTimeout(timeoutId)
-    }
-  }, [showAlert])
+  const { user2, login, logout } = useContext(UserContext); // 使用 useContext 钩子访问 Context
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -58,9 +46,16 @@ export default function SignIn() {
 
     axios.post(apiUrl, singinRequest)
     .then(response => {
-        dispatch(setToken(response.headers)); // true or false
+        setUser(response.data);
+        console.log(123); // tr
+        console.log(response.data); // true or false
+        localStorage.setItem('email', data.get('email'));
+        console.log(localStorage.getItem('email'));
         if (response.data){
-          setUser(true);
+          console.log(data.get('email'));
+          login(data.get('email'));
+          setShowAlert(false);
+          navigate('/');
         }
         else{
           setShowAlert(showAlert => true);

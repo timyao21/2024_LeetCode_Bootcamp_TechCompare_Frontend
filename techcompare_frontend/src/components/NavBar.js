@@ -2,10 +2,64 @@ import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import NavDropdown from 'react-bootstrap/NavDropdown';
+import React, { useState, useEffect, useContext } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { UserContext } from '../context/UserContext';
+
+
 
 function BasicExample() {
+  // Initialize state directly from localStorage if available
+  const { user2, login, logout } = useContext(UserContext); // 使用 useContext 钩子访问 Context
+  
+  const [user, setUser] = useState({
+    isLoggedIn: !!localStorage.getItem('email'),
+    email: localStorage.getItem('email') || '',
+  });
+  const [refresh, setRefresh] = useState(0); // 新增状态用于强制刷新
+  console.log("abcsds");
+  console.log(user2.email);
+
+
+  useEffect(() => {
+    const handleStorageChange = () => {
+      const storedEmail = localStorage.getItem('email');
+      setUser({
+        isLoggedIn: !!storedEmail,
+        email: storedEmail || ''
+      });
+      setRefresh(refresh => refresh + 1); // 更新状态以强制重新渲染
+    };
+
+    window.addEventListener('storage', handleStorageChange); // 监听storage事件
+    return () => {
+      window.removeEventListener('storage', handleStorageChange);
+    };
+  }, []);
+
+  useEffect(() => {
+    setUser({
+      isLoggedIn: !!localStorage.getItem('email'),
+      email: localStorage.getItem('email') || '',
+    });
+  }, [refresh]); // 依赖于refresh状态的改变
+
+  const handleLogin = () => {
+    const email = '';  // 这里应该从登录表单获取
+    localStorage.setItem('email', email);  // 存储 email 到 localStorage
+    setUser({ isLoggedIn: true, email });  // 更新状态
+    console.log("Attempting to log in with email:", email);
+  };
+
+  const handleLogout = () => {
+    setUser({ isLoggedIn: false, email: '' });  // Reset state
+    logout();
+    console.log("Logged out");
+  };
+
+
   return (
-    <Navbar expand="lg" className="bg-body-tertiary">
+    <Navbar expand="lg" className="bg-color2">
       <Container>
         <Navbar.Brand href="/">Tech Compare</Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
@@ -15,10 +69,22 @@ function BasicExample() {
                 <Nav.Link href="/search">Search</Nav.Link>
             </Nav>
 
-            <Nav className="ms-auto">
+            {/* <Nav className="ms-auto">
                 <Nav.Link href="/wishlist">Wish List</Nav.Link>
                 <Nav.Link href="/signin">Sign in/Sign up</Nav.Link>
-            </Nav>
+            </Nav> */}
+            <Nav className="ms-auto">
+            <Nav.Link href="/wishlist">Wish List</Nav.Link>
+            {user2.isLoggedIn ? (
+              <NavDropdown title={user2.email} id="basic-nav-dropdown">
+                {/* <NavDropdown.Item>{user.email}</NavDropdown.Item> */}
+                {/* <NavDropdown.Divider /> */}
+                <NavDropdown.Item onClick={handleLogout}>Sign out</NavDropdown.Item>
+              </NavDropdown>
+            ) : (
+              <Nav.Link href="/signin" onClick={handleLogin}>Sign in/Sign up</Nav.Link>
+            )}
+          </Nav>
 
         </Navbar.Collapse>
       </Container>
@@ -27,3 +93,5 @@ function BasicExample() {
 }
 
 export default BasicExample;
+
+

@@ -10,16 +10,13 @@ import axios from 'axios';
 import CategoryMenu from '../components/Filters.js';
 import ProductCard from '../components/ProductCard.js';
 
-// Import the JSON data
-import productsData from '../testDataSet/products.json';
-
 function Home() {
     // container for all products
     const [products, setProducts] = React.useState([]);
-    const [categories, setCategories] = useState([]);
-    const [brands, setBrands] = useState([]);
-    const [minPrice, setMinPrice] = useState('');
-    const [maxPrice, setMaxPrice] = useState('');
+    const [categories, setCategories] = useState('');
+    const [brands, setBrands] = useState('');
+    const [minPrice, setMinPrice] = useState(0);
+    const [maxPrice, setMaxPrice] = useState(999999999);
 
     const handleCategoriesChange = (newCategories) => {
         setCategories(newCategories);
@@ -32,55 +29,48 @@ function Home() {
     };
 
     const handleMinPriceChange = (newMinPrice) => {
-        setCategories(newMinPrice);
+        // Set minPrice to 0 if the input is empty or null, otherwise parse it as a float
+        setMinPrice(newMinPrice === '' || newMinPrice == null ? 0 : parseFloat(newMinPrice));
         console.log("Updated minPrice:", newMinPrice);
     };
 
     const handleMaxPriceChange = (newMaxPrice) => {
-        setBrands(newMaxPrice);
+        setMaxPrice(newMaxPrice === '' || newMaxPrice == null ? 999999999 : parseFloat(newMaxPrice));
         console.log("Updated maxPrice:", newMaxPrice);
     };
     
     React.useEffect(() => {
-        // fetch all products and console.log it
+        // fetch products and console.log it
         const fetchAllData = async () => {
             try {
-                if (categories.length == 0 && brands.length == 0) {
-                    const response = await axios.get('http://localhost:8080/techCompare/products/getall'); // Adjust the URL based on your server
-                    console.log("Fetch All Data")
-                    setProducts(response.data);
-                    console.log(response.data)
-                }
-                else{
-                    console.log("Fetch data based on categories.")
-                    if (categories.length == 0){
-
-                    }
-                    setProducts([]);
-                }
+                const urlFilter = `http://localhost:8080/techCompare/products?category=${categories}&brand=${brands}&minPrice=${minPrice}&maxPrice=${maxPrice}`;
+                console.log("Fetch data based on categories.")
+                const response = await axios.get(urlFilter);
+                setProducts(response.data);
+                console.log(response.data)
             } catch (error) {
+                // print out error, if unable to load data
                 console.error('Error fetching data: ', error);
-                // Handle errors here based on your application's needs
             }
         };
         fetchAllData();            
-    }, [categories, brands]);
+    }, [categories, brands, minPrice, maxPrice]);
 
 
     return(
-        <div style={{padding:"8%"}}>
+        <div style={{padding:"8%"}} className = "bg-color1">
             {/* Outer Grid Container */}
             <Grid container spacing={2}>
                 {/* Menu on the Left */}
                 <Grid item xs={2}>
                     <CategoryMenu onCategoriesChange={handleCategoriesChange} onBrandsChange={handleBrandsChange} onMinPriceChange={handleMinPriceChange} onMaxPriceChange={handleMaxPriceChange}/>
                 </Grid>
-                {/* Second Item (Container for Nested Grid) */}
+                {/* Second Item (Container for prouduct display) */}
                 <Grid item xs={10}>
                     {/* Nested Grid Container */}
                     <Grid container spacing={2}>
                         {products.map((product) => (
-                            <Grid item xs={6} md={4}>
+                            <Grid item xs={6} md={4} key={product.productStringId}>
                                 <ProductCard 
                                     id={product.productStringId}
                                     productName={product.productName}

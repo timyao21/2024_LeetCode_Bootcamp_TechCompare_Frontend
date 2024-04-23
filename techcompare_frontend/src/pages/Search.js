@@ -42,7 +42,7 @@ export default function Search() {
             <Box>
                 <Typography variant="h3" sx={{m:3}}>
                     Explore Our Products
-                </Typography>                
+                </Typography>
             </Box>
             <Box
                 sx={{

@@ -8,16 +8,19 @@ import { Provider } from 'react-redux'
 
 // bootstrap
 import 'bootstrap/dist/css/bootstrap.min.css';
+import { UserProvider } from './context/UserContext';
 
 // components
 import Nav from "./components/NavBar.js"
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-    <Provider store = {store}>
-      <Nav />
-      <App />
-    </Provider>
+  <React.StrictMode>
+    <UserProvider>
+    <Nav />
+    <App />
+    </UserProvider>
+  </React.StrictMode>
 );
 
 // If you want to start measuring performance in your app, pass a function
