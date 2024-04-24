@@ -27,7 +27,7 @@ function App() {
         <Route path="/signup" element={<SignUp />} />
         <Route path="/signin" element={<SignIn />} />
         <Route path="/search" element={<Search />} />
-        <Route path="/wishlistpage/:id" element={<WishListPage />} />
+        <Route path="/wishlistpage" element={<WishListPage />} />
         <Route path="*" element={<NoPage />} />
         <Route path="/product/compare/:id" element={<TechCompare />}/>
         <Route path="/product/compare/:id1/:id2" element={<ComparePage />} />

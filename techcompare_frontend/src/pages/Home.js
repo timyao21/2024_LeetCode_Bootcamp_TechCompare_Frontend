@@ -9,6 +9,14 @@ import axios from 'axios';
 //components
 import CategoryMenu from '../components/Filters.js';
 import ProductCard from '../components/ProductCard.js';
+const token = localStorage.getItem("authToken");
+if (token!="signin"){
+    axios.defaults.headers.common = {"signin": "sign"}
+}
+else{
+    axios.defaults.headers.common = {"signout": "signout"}
+}
+
 
 function Home() {
     // container for all products
@@ -43,6 +51,23 @@ function Home() {
         // fetch products and console.log it
         const fetchAllData = async () => {
             try {
+
+                if (categories.length == 0 && brands.length == 0) {
+                    const response = await axios.get('http://localhost:8080/techCompare/products/getall',{headers: {
+                        'Custom-Header': 'value', // 设置 Content-Type 头部
+                        'auth': token // 设置 Authorization 头部
+                      }}); // Adjust the URL based on your server
+                    console.log("Fetch All Data")
+                    setProducts(response.data);
+                    console.log(response.data)
+                }
+                else{
+                    console.log("Fetch data based on categories.")
+                    if (categories.length == 0){
+
+                    }
+                    setProducts([]);
+                }
                 const urlFilter = `http://localhost:8080/techCompare/products?category=${categories}&brand=${brands}&minPrice=${minPrice}&maxPrice=${maxPrice}`;
                 console.log("Fetch data based on categories.")
                 const response = await axios.get(urlFilter);

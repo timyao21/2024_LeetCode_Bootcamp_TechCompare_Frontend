@@ -1,6 +1,6 @@
 import * as React from 'react';
 import axios from 'axios';
-import { useState } from 'react';
+import { useState, useContext } from 'react';
 
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
@@ -15,11 +15,22 @@ import Alert from '@mui/material/Alert';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { useNavigate } from 'react-router-dom'; 
+import { UserContext } from '../context/UserContext';
+const token = localStorage.getItem("authToken");
+if (token!="signin"){
+    axios.defaults.headers.common = {"signin": "sign"}
+}
+else{
+  axios.defaults.headers.common = {"signout": "signout"}
+}
 
 const defaultTheme = createTheme();
 
 export default function SignUp() {
-
+  const { user2, login, logout } = useContext(UserContext);
+  const navigate = useNavigate();
+  const token = localStorage.getItem("authToken");
   const [user, setUser] = useState(null);
   const [showAlert, setShowAlert] = useState(false);
 
@@ -55,12 +66,17 @@ export default function SignUp() {
     // 其他字段...
   };
 
-    axios.post(apiUrlRegister, user)
+    axios.post(apiUrlRegister, user,{headers: {
+      'Custom-Header': 'value', // 设置 Content-Type 头部
+      'auth': token // 设置 Authorization 头部
+    }})
       .then(response => {
         setUser(response.data);
         console.log(response.data)
         if (response.data) {
           setShowAlert(false);
+          login(email);
+          navigate('/');
         }
         else{
           setShowAlert(true);

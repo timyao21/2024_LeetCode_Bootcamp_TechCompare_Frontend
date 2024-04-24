@@ -9,12 +9,23 @@ import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom'; 
 import axios from 'axios';
 import { UserContext } from '../context/UserContext';
-
-// import product images
+import image123 from '../testDataSet/image1.jpg'
+import axiosInstance from '../services/api.js';
+import { SystemSecurityUpdate } from '@mui/icons-material';
 import laptopImage from '../images/laptop.jpg';
 import phoneImage from '../images/phone.png';
 import headphoneImage from '../images/headphone.png';
 import padImage from '../images/pad.png';
+
+const token = localStorage.getItem("authToken");
+if (token!="signin"){
+    axios.defaults.headers.common = {"signin": "sign"}
+}
+else{
+    axios.defaults.headers.common = {"signout": "signout"}
+}
+
+
 
 
 // Category to Image mapping
@@ -24,6 +35,7 @@ const categoryImages = {
     Headphone: headphoneImage,
     Pad:padImage,
 };
+
 
 const cardAreaStyle = {
     top: "0",
@@ -43,6 +55,7 @@ export default function Product({id, productName, price, ram, storage, category}
     
     const navigate = useNavigate();
     const { user2, login, logout } = useContext(UserContext);
+    
 
     // const addToWishList = () => {
     //     console.log(`Added ${productName} to wishlist`);
@@ -66,15 +79,24 @@ export default function Product({id, productName, price, ram, storage, category}
             }
             console.log("addtowishlist");
             console.log('Sending request with:', { email: email, productId: id });
-            const response = await axios.post('http://localhost:8080/techCompare/user/addWishlist', null, {
-            params: {
-                email: email,
-                productId: id
-            }
-        });
+            const url = 'http://localhost:8080/techCompare/user/addWishlist';
+            // const url2 = '/user/addWishlist';
+
+            console.log("authToken");
+            console.log(token);
+            
+            await axios.post(url, null, {
+                headers: {
+                    token: token,
+                },
+                params: {
+                    email: email,
+                    productId: id
+                }
+            });
     
-            console.log('Product added to wishlist:', response.data);
-            navigate(`/wishlistpage/${id}`);  // 使用 email 作为 URL 参数或其他标识符
+            console.log('Product added to wishlist:');
+            navigate(`/wishlistpage`);
         } catch (error) {
             console.error('Error adding product to wishlist:', error);
         }

@@ -74,7 +74,7 @@ function BasicExample() {
                 <Nav.Link href="/signin">Sign in/Sign up</Nav.Link>
             </Nav> */}
             <Nav className="ms-auto">
-            <Nav.Link href="/wishlist">Wish List</Nav.Link>
+            <Nav.Link href="/wishlistpage">Wish List</Nav.Link>
             {user2.isLoggedIn ? (
               <NavDropdown title={user2.email} id="basic-nav-dropdown">
                 {/* <NavDropdown.Item>{user.email}</NavDropdown.Item> */}

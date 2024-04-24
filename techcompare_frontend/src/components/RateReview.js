@@ -6,6 +6,17 @@ import { Button, CardActionArea, CardActions } from '@mui/material';
 import Snackbar from '@mui/material/Snackbar';
 import Alert from '@mui/material/Alert';
 import { useParams } from 'react-router-dom';
+import { useState, useContext } from 'react';
+import { UserContext } from '../context/UserContext';
+
+
+const token = localStorage.getItem("authToken");
+if (token!="signin"){
+    axios.defaults.headers.common = {"signin": "sign"};
+}
+else{
+  axios.defaults.headers.common = {"signout": "signout"};
+}
 
 
 const labels = {
@@ -22,7 +33,9 @@ function getLabelText(value) {
 }
 
 export default function RateReview() {
+  const { user2, login, logout } = useContext(UserContext);
   const { id } = useParams();
+  const token = localStorage.getItem("authToken");
   //console.log("we got id " + id);
 
   const [value, setValue] = React.useState(2);
@@ -37,6 +50,8 @@ export default function RateReview() {
   const handleRatingChange = (event, newValue) => {
     setValue(newValue);
   };
+  const email2 = user2.email;
+
 
   const handleReviewSubmit = async () => {
     try {
@@ -45,10 +60,13 @@ export default function RateReview() {
         comment: reviewText,
         rating: value,
         time: new Date(), 
-        email: "user123@example.com" // Static email for example; this can be dynamic if needed
-      };
+        email: email2 } // Static email for example; this can be dynamic if needed
+      ;
       
-      const response = await axios.post(url, body, {params: { id }});
+      const response = await axios.post(url, body, {params: { id }}, {headers: {
+        'Custom-Header': 'value', // 设置 Content-Type 头部
+        'auth': token // 设置 Authorization 头部
+      }});
       console.log("wrote data:" + response.data);
       setReviewText('');  // Clear the text field after successful submission
       setSnackbarMessage('Review submitted successfully');
