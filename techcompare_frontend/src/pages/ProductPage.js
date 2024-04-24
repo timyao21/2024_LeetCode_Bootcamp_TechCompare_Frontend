@@ -12,6 +12,13 @@ import { Link } from 'react-router-dom';
 import PriceHistory from '../components/PriceHistory';
 import RateReview from '../components/RateReview';
 import api from '../services/api';
+
+// import product images
+import laptopImage from '../images/laptop2.jpg';
+import phoneImage from '../images/phone2.png';
+import headphoneImage from '../images/headphone2.jpeg';
+import padImage from '../images/pad2.jpg';
+
 const token = localStorage.getItem("authToken");
 if (token!="signin"){
     axios.defaults.headers.common = {"signin": "sign"}
@@ -20,11 +27,6 @@ else{
     axios.defaults.headers.common = {"signout": "signout"}
 }
 
-// import product images
-import laptopImage from '../images/laptop2.jpg';
-import phoneImage from '../images/phone2.png';
-import headphoneImage from '../images/headphone2.jpeg';
-import padImage from '../images/pad2.jpg';
 
 
 const categoryImages = {
@@ -183,6 +185,12 @@ export default function ProductPage() {
     width={500}
     height={500}
     />
+
+{/* Store Availability */}
+<Divider sx={{m:4}}></Divider>
+<Typography variant="h4">
+    Availability:
+</Typography>
 
 <Grid container spacing={2} sx={{ mt: 1 }}>
     {nearbyStores.length > 0 ? (
