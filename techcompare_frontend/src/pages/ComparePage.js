@@ -71,7 +71,16 @@ export default function ComparePage() {
                       p: 5
                     }}
                   >
-                    <Box>
+                    <Box
+                      sx={{
+                        height: '300px', 
+                        width: '100%', 
+                        display: 'flex',
+                        justifyContent: 'center', 
+                        alignItems: 'center', 
+                        overflow: 'hidden'
+                      }}
+                    >
                       <ProductImage id={product.productStringId}/>                      
                     </Box>
 
