@@ -12,10 +12,15 @@ import { UserContext } from '../context/UserContext';
 import image123 from '../testDataSet/image1.jpg'
 import axiosInstance from '../services/api.js';
 import { SystemSecurityUpdate } from '@mui/icons-material';
+import Box from '@mui/material/Box';
+
+
+// image
 import laptopImage from '../images/laptop.jpg';
 import phoneImage from '../images/phone.png';
 import headphoneImage from '../images/headphone.png';
 import padImage from '../images/pad.png';
+import ProductImage from '../components/ProductImage';
 
 const token = localStorage.getItem("authToken");
 if (token!="signin"){
@@ -24,9 +29,6 @@ if (token!="signin"){
 else{
     axios.defaults.headers.common = {"signout": "signout"}
 }
-
-
-
 
 // Category to Image mapping
 const categoryImages = {
@@ -102,7 +104,7 @@ export default function Product({id, productName, price, ram, storage, category}
         }
     };
 
-    const image = categoryImages[category] || phoneImage;  // Default to laptop if category is undefined
+    const image = <ProductImage id={id}/>  // Default to laptop if category is undefined
     
 
 
@@ -110,12 +112,9 @@ export default function Product({id, productName, price, ram, storage, category}
 
         <Card sx={{ maxWidth: 345, height: 360 }}>
         <CardActionArea component={Link} to={`/product/${id}`} style = {cardAreaStyle}>
-            <CardMedia
-            component="img"
-            height="140"
-            image = {image}
-            alt="Product"
-            />
+            <Box sx={{height:"150px"}}>
+                <ProductImage id={id}/>
+            </Box>
             <CardContent>
                 <Typography gutterBottom variant="h5" component="div">
                     {productName}

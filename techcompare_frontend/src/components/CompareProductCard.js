@@ -10,8 +10,11 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { UserContext } from '../context/UserContext';
 import { useParams } from 'react-router-dom';
+import Box from '@mui/material/Box';
 
 // import product images
+import ProductImage from '../components/ProductImage';
+
 import laptopImage from '../images/laptop.jpg';
 import phoneImage from '../images/phone.png';
 import headphoneImage from '../images/headphone.png';
@@ -90,12 +93,15 @@ export default function Product({productId1, id, productName, price, ram, storag
 
         <Card sx={{ maxWidth: 345, height: 360 }}>
         <CardActionArea component={Link} to={`/product/${id}`} style = {cardAreaStyle}>
-            <CardMedia
+            {/* <CardMedia
             component="img"
             height="140"
             image = {image}
             alt="Product"
-            />
+            /> */}
+            <Box sx={{height:"150px"}}>
+                <ProductImage id={id}/>
+            </Box>
             <CardContent>
                 <Typography gutterBottom variant="h5" component="div">
                     {productName}

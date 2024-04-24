@@ -10,6 +10,8 @@ import Button from '@mui/material/Button';
 import { Link } from 'react-router-dom';
 
 // import product images
+import ProductImage from '../components/ProductImage';
+
 import laptopImage from '../images/laptop.jpg';
 import phoneImage from '../images/phone.png';
 import headphoneImage from '../images/headphone.png';
@@ -24,7 +26,6 @@ const categoryImages = {
 
 export default function ComparePage() {
     const { id1, id2 } = useParams();
-    console.log(id1, id2); 
 
     const [product1, setProduct1] = useState([]);
     const [specifications1, setSpecifications1] = useState([]);
@@ -51,8 +52,6 @@ export default function ComparePage() {
         fetchData(id2, setProduct2, setSpecifications2);
     }, [id1, id2]);
 
-    // const image1 = categoryImages[product1.category] || phoneImage;  // Default to laptop if category is undefined
-    // const image2 = categoryImages[product2.category] || phoneImage;
 
     return (
         <Box sx={{ flexGrow: 1 }}>
@@ -72,7 +71,10 @@ export default function ComparePage() {
                       p: 5
                     }}
                   >
-                    <img src={image} alt={product.productName} style={{ maxWidth: '100%', maxHeight: '300px' }} />
+                    <Box>
+                      <ProductImage id={product.productStringId}/>                      
+                    </Box>
+
                     <Typography variant="h3" component="h2" sx={{ pb: 5 }}>
                       {product.productName}
                     </Typography>

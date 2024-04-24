@@ -10,16 +10,17 @@ import Button from '@mui/material/Button';
 import { Link } from 'react-router-dom';
 import StarIcon from '@mui/icons-material/Star';
 
-
 import PriceHistory from '../components/PriceHistory';
 import RateReview from '../components/RateReview';
 import api from '../services/api';
+import ProductImage from '../components/ProductImage';
 
 // import product images
 import laptopImage from '../images/laptop2.jpg';
 import phoneImage from '../images/phone2.png';
 import headphoneImage from '../images/headphone2.jpeg';
 import padImage from '../images/pad2.jpg';
+
 
 const token = localStorage.getItem("authToken");
 if (token!="signin"){
@@ -130,12 +131,7 @@ export default function ProductPage() {
         <Grid container spacing={8}>
             <Grid item xs={6}>
                 <Card>
-                    <CardMedia
-                        component="img"
-                        height="auto"
-                        image={image} 
-                        alt={product.productName} 
-                    />
+                    <ProductImage id={product.productStringId}/>
                 </Card>
             </Grid>
             <Grid item xs={6} sx={{ pl: 4 }}>
