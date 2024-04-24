@@ -6,6 +6,8 @@ import Container from '@mui/material/Container';
 import axios from 'axios';
 import Divider from '@mui/material/Divider';
 import Stack from '@mui/material/Stack';
+import Button from '@mui/material/Button';
+import { Link } from 'react-router-dom';
 
 import PriceHistory from '../components/PriceHistory';
 import RateReview from '../components/RateReview';
@@ -18,6 +20,19 @@ else{
     axios.defaults.headers.common = {"signout": "signout"}
 }
 
+// import product images
+import laptopImage from '../images/laptop2.jpg';
+import phoneImage from '../images/phone2.png';
+import headphoneImage from '../images/headphone2.jpeg';
+import padImage from '../images/pad2.jpg';
+
+
+const categoryImages = {
+    Laptop: laptopImage,
+    Phone: phoneImage,
+    Headphone: headphoneImage,
+    Pad:padImage,
+  };
 
 export default function ProductPage() {
     const [nearbyStores, setNearbyStores] = React.useState([]);
@@ -57,6 +72,7 @@ export default function ProductPage() {
         fetchData();
     }, [id]);
 
+
     useEffect(() => {
         const fetchNearbyStores = async () => {
             try {
@@ -78,13 +94,23 @@ export default function ProductPage() {
     }, [id]);
     
 
+    const image = categoryImages[product.category] || phoneImage;  // Default to laptop if category is undefined
+
+
   return (
     <Container maxWidth="md" sx={{pt: 5}}>
-        <Grid container spacing={2}>
+        <Grid container spacing={8}>
             <Grid item xs={6}>
-                <p>Image</p>
+                <Card>
+                    <CardMedia
+                        component="img"
+                        height="auto"
+                        image={image} 
+                        alt={product.productName} 
+                    />
+                </Card>
             </Grid>
-            <Grid item xs={6}>
+            <Grid item xs={6} sx={{ pl: 4 }}>
                 {/* <p>id: {product.productStringId}</p> */}
 
                 <Typography variant="h3" component="h2" sx={{pb: 5}}>
@@ -108,6 +134,10 @@ export default function ProductPage() {
                             }
                             return null; // If value is null, return null to render nothing for this entry
                         })}
+                        <Divider sx={{m:2}}></Divider>
+                        <Button variant = "contained" component={Link} to={`/product/compare/${product.productStringId}`}>
+                            Compare similar products 
+                        </Button>
                     </Box>
                 </Box>
             </Grid>
@@ -143,14 +173,15 @@ export default function ProductPage() {
                 ))}
         </Stack> */}
         <LineChart
-      xAxis={[{ scaleType: 'point', data: priceHistory.map(obj => obj.time.substr(0, 10)) }]}
-      series={[
+
+    xAxis={[{ scaleType: 'point', data: priceHistory.map(obj => obj.time.substr(0, 10)) }]}
+    series={[
         {
-          data: priceHistory.map(obj => obj.price),
+        data: priceHistory.map(obj => obj.price),
         },
-      ]}
-      width={500}
-      height={500}
+    ]}
+    width={500}
+    height={500}
     />
 
 <Grid container spacing={2} sx={{ mt: 1 }}>
@@ -186,11 +217,8 @@ export default function ProductPage() {
             </Grid>
         </Grid>
     )}
-</Grid>
-
-
-
-    </Container>
+    </Grid>
+</Container>
 
     
   );

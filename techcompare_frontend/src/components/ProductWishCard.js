@@ -19,7 +19,7 @@ else{
     axios.defaults.headers.common = {"signout": "signout"}
 }
   
-export default function ProductWishCard({id, productName, imageLink, price, ram, storage, onRemove}) {
+export default function ProductWishCard({id, productName, price, ram, storage, onRemove}) {
     const navigate = useNavigate();
     const [currentPrice, setCurrentPrice] = useState(price);
     const [previousPrice, setPreviousPrice] = useState(null);
