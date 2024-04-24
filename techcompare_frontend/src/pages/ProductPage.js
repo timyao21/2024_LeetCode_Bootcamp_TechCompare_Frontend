@@ -8,6 +8,8 @@ import Divider from '@mui/material/Divider';
 import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
 import { Link } from 'react-router-dom';
+import StarIcon from '@mui/icons-material/Star';
+
 
 import PriceHistory from '../components/PriceHistory';
 import RateReview from '../components/RateReview';
@@ -36,12 +38,27 @@ const categoryImages = {
     Pad:padImage,
   };
 
+// Labels for the ratings
+const labels = {
+    0: 'Unacceptable',
+    1: 'Poor',
+    2: 'Fair',
+    3: 'Good',
+    4: 'Very Good',
+    5: 'Excellent',
+  };
+  
+function getLabelText(value) {
+    return `${value} Star${value !== 1 ? 's' : ''}, ${labels[value]}`;
+}
+
 export default function ProductPage() {
     const [nearbyStores, setNearbyStores] = React.useState([]);
     const { id } = useParams(); // Get the `id` param from the URL
     // const [product, setProduct] = useState({ id: '', productName: '', imageLink: '', price: '' });
     const [product, setProduct] = React.useState([]);
     const [review, setReview] = React.useState([]);
+    const [averageRating, setAverageRating] = React.useState(0);
     const [priceHistory, setPriceHistory] = React.useState([]);
     const [specifications, setSpecifications] = React.useState([]);
     const token = localStorage.getItem("authToken");
@@ -61,6 +78,15 @@ export default function ProductPage() {
                     }}        );
                 setProduct(response.data);
                 setReview(response.data.review)
+                if (response.data.review.length > 0) {
+                    const totalRating = response.data.review.reduce((acc, curr) => {
+                        return acc + curr.rating; 
+                    }, 0);
+                    const avgRating = totalRating / response.data.review.length;
+                    setAverageRating(avgRating);
+                } else {
+                    setAverageRating(0);  // Handle case with no reviews
+                }
                 setPriceHistory(response.data.priceHistory)
                 setSpecifications(response.data.specifications)
                 console.log((response.data.review))
@@ -151,12 +177,19 @@ export default function ProductPage() {
         </Typography>
         
         <RateReview productId={product.productStringId} />
+        <Box sx={{ display: 'flex', alignItems: 'center', mt: 2 }}>
+        <StarIcon sx={{ color: "#faaf00" }} /> {/* Display star icon next to the average */}
+        <Typography variant="h6" sx={{ ml: 1 }}>
+          Average Rating: {averageRating.toFixed(1)} / 5
+        </Typography>
+        </Box>
 
         <Stack spacing={2} sx={{mt:1, p:2}}>
             {review.map((item, index) => (
                 <Paper elevation={2} sx={{p:2}}>
                     <Typography>User: {item.email}</Typography>
                     <Typography>{item.comment}</Typography>
+                    <Typography sx={{ mt: 2 }}>Rating: {getLabelText(item.rating)}</Typography>
                 </Paper>
                 ))}
         </Stack>
