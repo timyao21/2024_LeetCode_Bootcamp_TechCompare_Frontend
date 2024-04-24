@@ -12,7 +12,7 @@ import fetchData from '../pages/WishListPage.js'
 
 import image123 from '../testDataSet/image1.jpg'
   
-export default function ProductWishCard({id, productName, imageLink, price, ram, storage, onRemove}) {
+export default function ProductWishCard({id, productName, price, ram, storage, onRemove}) {
     const navigate = useNavigate();
     
 

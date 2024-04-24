@@ -7,7 +7,7 @@ import Divider from '@mui/material/Divider';
 import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
 import { Link } from 'react-router-dom';
-import ProductCard from '../components/ProductCard.js';
+import CompareProductCard from '../components/CompareProductCard.js';
 
 
 export default function TechCompare() {
@@ -27,7 +27,7 @@ export default function TechCompare() {
             }
         };
         fetchData();
-    }, []);
+    }, [id]);
 
 
   return (
@@ -39,13 +39,15 @@ export default function TechCompare() {
             <Grid container spacing={2}>
                         {products.map((product) => (
                             <Grid item xs={6} md={4}>
-                                <ProductCard 
+                                <CompareProductCard
+                                    productId1={id}  
                                     id={product.productStringId}
                                     productName={product.productName}
                                     imageLink={product.imageLink}
                                     price={product.currentPrice}
                                     ram={product.specifications.ram}
-                                    storage={product.specifications.storage}/>
+                                    storage={product.specifications.storage}
+                                    category={product.category}/>
                             </Grid>
                         ))}
                     </Grid>
