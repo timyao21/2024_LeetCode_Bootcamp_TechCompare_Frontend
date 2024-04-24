@@ -17,11 +17,19 @@ import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { useNavigate } from 'react-router-dom'; 
 import { UserContext } from '../context/UserContext';
+const token = localStorage.getItem("authToken");
+if (token!="signin"){
+    axios.defaults.headers.common = {"signin": "sign"}
+}
+else{
+  axios.defaults.headers.common = {"signout": "signout"}
+}
 
 const defaultTheme = createTheme();
 
 export default function SignIn() {
   const navigate = useNavigate();
+  const token = localStorage.getItem("authToken");
   const [user, setUser] = useState(false);
   const [email, setEmail] = useState(false);
   const [showAlert, setShowAlert] = useState(false);
@@ -43,12 +51,16 @@ export default function SignIn() {
       password: data.get('password'),
     });
 
-    axios.post(apiUrl, singinRequest)
+    axios.post(apiUrl, singinRequest,{headers: {
+      'Custom-Header': 'value', // 设置 Content-Type 头部
+      'auth': token // 设置 Authorization 头部
+    }})
     .then(response => {
         setUser(response.data);
         console.log(123); // tr
         console.log(response.data); // true or false
         localStorage.setItem('email', data.get('email'));
+        localStorage.setItem('authToken', "signin");  // Save the token
         console.log(localStorage.getItem('email'));
         if (response.data){
           console.log(data.get('email'));
