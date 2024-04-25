@@ -9,7 +9,6 @@ import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
 import { Link } from 'react-router-dom';
 
-import PriceHistory from '../components/PriceHistory';
 import RateReview from '../components/RateReview';
 
 

@@ -47,7 +47,7 @@ export default function SignIn() {
     .then(response => {
         setUser(response.data);
         console.log(123); // tr
-        console.log(response.data); // true or false
+        console.log(response); // true or false
         localStorage.setItem('email', data.get('email'));
         console.log(localStorage.getItem('email'));
         if (response.data){
