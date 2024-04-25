@@ -8,12 +8,20 @@ import axios from 'axios';
 import { Box, Grid, Typography } from '@mui/material';
 
 import ProductCard from '../components/ProductCard.js';
+const token = localStorage.getItem("authToken");
+if (token!="signin"){
+    axios.defaults.headers.common = {"signin": "sign"}
+}
+else{
+    axios.defaults.headers.common = {"signout": "signout"}
+}
 
 
 export default function Search() {
 
     const [searchValue, setSearchValue] = React.useState('');
     const [products, setProducts] = React.useState([]);
+    const token = localStorage.getItem("authToken");
 
     const handleInputChange = (event) => {
         setSearchValue(event.target.value);  // Update state when input changes
@@ -27,7 +35,10 @@ export default function Search() {
     const fetchData = async () => {
         try {
             // console.log(id)
-            const response = await axios.get('http://localhost:8080/techCompare/products/search', {params:{name: searchValue}}); // Adjust the URL based on your server
+            const response = await axios.get('http://localhost:8080/techCompare/products/search', {params:{name: searchValue}},{headers: {
+                'Custom-Header': 'value', // 设置 Content-Type 头部
+                'auth': token // 设置 Authorization 头部
+              }}); // Adjust the URL based on your server
             setProducts(response.data);
             console.log((response.data))
         } catch (error) {
