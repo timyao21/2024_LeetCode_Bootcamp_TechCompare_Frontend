@@ -10,7 +10,6 @@ import Button from '@mui/material/Button';
 import { Link } from 'react-router-dom';
 import StarIcon from '@mui/icons-material/Star';
 
-import PriceHistory from '../components/PriceHistory';
 import RateReview from '../components/RateReview';
 import api from '../services/api';
 import ProductImage from '../components/ProductImage';
