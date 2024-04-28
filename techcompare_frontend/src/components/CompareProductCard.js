@@ -72,7 +72,7 @@ export default function Product({productId1, id, productName, price, ram, storag
             }
             console.log("addtowishlist");
             console.log('Sending request with:', { email: email, productId: id });
-            const response = await axios.post('http://techcompare.azurewebsites.net/techCompare/user/addWishlist', null, {
+            const response = await axios.post('https://techcompare.azurewebsites.net/techCompare/user/addWishlist', null, {
             params: {
                 email: email,
                 productId: id
