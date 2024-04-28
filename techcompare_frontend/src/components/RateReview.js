@@ -55,7 +55,7 @@ export default function RateReview() {
 
   const handleReviewSubmit = async () => {
     try {
-      const url = `http://techcompare.azurewebsites.net/techCompare/products/sendreview`;
+      const url = `https://techcompare.azurewebsites.net/techCompare/products/sendreview`;
       const body = {
         comment: reviewText,
         rating: value,

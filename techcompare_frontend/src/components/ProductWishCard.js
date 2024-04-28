@@ -28,7 +28,7 @@ export default function ProductWishCard({id, productName, price, ram, storage, o
     useEffect(() => {
         const fetchCurrentPrice = async () => {
             try {
-                const url = `http://techcompare.azurewebsites.net/techCompare/products/${id}/currentprice`;
+                const url = `https://techcompare.azurewebsites.net/techCompare/products/${id}/currentprice`;
                 const response = await axios.get(url, {
                     headers: {
                         'auth': token,
@@ -47,7 +47,7 @@ export default function ProductWishCard({id, productName, price, ram, storage, o
                     params.append('productId', id);
                     params.append('newPrice', newPrice);
 
-                    const url_pricehis = `http://techcompare.azurewebsites.net/techCompare/products/updatepricehist`;
+                    const url_pricehis = `https://techcompare.azurewebsites.net/techCompare/products/updatepricehist`;
                     axios.post(url_pricehis, params, {
                         headers: {
                           'Custom-Header': 'value', // 设置 Content-Type 头部
@@ -88,7 +88,7 @@ export default function ProductWishCard({id, productName, price, ram, storage, o
             const email = "user123@example.com";
             console.log('Sending request with:', { email: email, productId: id });
             console.log(token);
-            const response = await axios.post('http://techcompare.azurewebsites.net/techCompare/user/removeFromWishlist', null, {
+            const response = await axios.post('https://techcompare.azurewebsites.net/techCompare/user/removeFromWishlist', null, {
             params: {
                 email: email,
                 productId: id

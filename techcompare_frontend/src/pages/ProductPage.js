@@ -69,7 +69,7 @@ export default function ProductPage() {
             try {
                 console.log(id);
                 
-                const url = `http://techcompare.azurewebsites.net/techCompare/products/${id}`;
+                const url = `https://techcompare.azurewebsites.net/techCompare/products/${id}`;
                 console.log(url);
                 const response = await axios.get(url, {
                     headers: {
@@ -104,7 +104,7 @@ export default function ProductPage() {
     useEffect(() => {
         const fetchNearbyStores = async () => {
             try {
-                const storesUrl = `http://techcompare.azurewebsites.net/techCompare/store/getStoreByInventoryQuantity?productStringId=${id}`;
+                const storesUrl = `https://techcompare.azurewebsites.net/techCompare/store/getStoreByInventoryQuantity?productStringId=${id}`;
                 const storesResponse = await axios.get(storesUrl,{
                     headers: {
                       'Custom-Header': 'value', // 设置 Content-Type 头部

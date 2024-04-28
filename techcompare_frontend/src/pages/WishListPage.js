@@ -26,7 +26,7 @@ function WishListPage() {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await axios.get(`http://techcompare.azurewebsites.net/techCompare/user/getWishlist?email=${encodeURIComponent(email)}`, {
+                const response = await axios.get(`https://techcompare.azurewebsites.net/techCompare/user/getWishlist?email=${encodeURIComponent(email)}`, {
                     headers: {
                         'Custom-Header': 'value', // 设置 Content-Type 头部
                         'auth': token // 设置 Authorization 头部
@@ -43,7 +43,7 @@ function WishListPage() {
 
     const handleRemoveFromWishlist = async (productId) => {
         try {
-            await axios.post('http://techcompare.azurewebsites.net/techCompare/user/removeFromWishlist', null, {
+            await axios.post('https://techcompare.azurewebsites.net/techCompare/user/removeFromWishlist', null, {
                 params: { email, productId }, 
                     headers: {
                       'Custom-Header': 'value', // 设置 Content-Type 头部
