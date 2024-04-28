@@ -81,7 +81,7 @@ export default function Product({id, productName, price, ram, storage, category}
             }
             console.log("addtowishlist");
             console.log('Sending request with:', { email: email, productId: id });
-            const url = 'http://localhost:8080/techCompare/user/addWishlist';
+            const url = 'http://techcompare.azurewebsites.net/techCompare/user/addWishlist';
             // const url2 = '/user/addWishlist';
 
             console.log("authToken");

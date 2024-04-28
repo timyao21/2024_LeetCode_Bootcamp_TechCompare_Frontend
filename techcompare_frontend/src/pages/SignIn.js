@@ -39,7 +39,7 @@ export default function SignIn() {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
     //API
-    const apiUrl = `http://localhost:8080/techCompare/user/login`;
+    const apiUrl = `http://techcompare.azurewebsites.net/techCompare/user/login`;
 
     const singinRequest = {
       email: data.get('email'),

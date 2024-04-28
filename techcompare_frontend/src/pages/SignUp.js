@@ -50,7 +50,7 @@ export default function SignUp() {
     // };
 
     //API url
-    const apiUrlRegister = `http://localhost:8080/techCompare/user/register`;
+    const apiUrlRegister = `http://techcompare.azurewebsites.net/techCompare/user/register`;
 
   const email = data.get('email');  // 从注册表单获取用户输入的邮箱
   const password = data.get('password'); // 从注册表单获取用户输入的密码
