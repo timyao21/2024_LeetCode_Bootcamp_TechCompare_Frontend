@@ -2,15 +2,15 @@ import * as React from 'react';
 import { useState, useEffect } from 'react';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
-import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
-import { Button, CardActionArea, CardActions } from '@mui/material';
+import { Button, CardActionArea, CardActions, Box } from '@mui/material';
 import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom'; 
 import axios from 'axios';
 import fetchData from '../pages/WishListPage.js'
+// import product images
+import ProductImage from '../components/ProductImage';
 
-import image123 from '../testDataSet/image1.jpg'
 const token = localStorage.getItem("authToken");
 if (token!="signin"){
     axios.defaults.headers.common = {"signin": "sign"}
@@ -125,12 +125,9 @@ export default function ProductWishCard({id, productName, price, ram, storage, o
     return (
         <Card sx={{ Width: 345, height:400 }}>
         <CardActionArea component={Link} to={`/product/${id}`}>
-            <CardMedia
-            component="img"
-            height="140"
-            image = {image123}
-            alt="Product"
-            />
+            <Box sx={{height:"150px"}}>
+                <ProductImage id={id}/>
+            </Box>
             <CardContent>
                 <Typography gutterBottom variant="h5" component="div">
                     {productName}
