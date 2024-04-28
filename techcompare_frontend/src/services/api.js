@@ -1,7 +1,7 @@
 // import axios from 'axios';
 
 // const axiosInstance = axios.create({
-//   baseURL: 'http://localhost:8080/techCompare',
+//   baseURL: 'http://techcompare.azurewebsites.net/techCompare',
 //   timeout: 1000,
 // });
 

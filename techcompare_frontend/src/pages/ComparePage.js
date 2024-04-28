@@ -36,7 +36,7 @@ export default function ComparePage() {
         // fetch all products and console.log it 
         const fetchData = async (id, setProduct, setSpecifications) => {
             try {
-                const url = `http://localhost:8080/techCompare/products/${id}`;
+                const url = `http://techcompare.azurewebsites.net/techCompare/products/${id}`;
                 console.log(url);
                 const response = await axios.get(url);
                 setProduct(response.data);

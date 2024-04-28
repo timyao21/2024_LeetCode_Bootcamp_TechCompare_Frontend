@@ -53,7 +53,7 @@ function Home() {
             try {
 
                 if (categories.length == 0 && brands.length == 0) {
-                    const response = await axios.get('http://localhost:8080/techCompare/products/getall',{headers: {
+                    const response = await axios.get('http://techcompare.azurewebsites.net/techCompare/products/getall',{headers: {
                         'Custom-Header': 'value', // 设置 Content-Type 头部
                         'auth': token // 设置 Authorization 头部
                       }}); // Adjust the URL based on your server
@@ -68,7 +68,7 @@ function Home() {
                     }
                     setProducts([]);
                 }
-                const urlFilter = `http://localhost:8080/techCompare/products?category=${categories}&brand=${brands}&minPrice=${minPrice}&maxPrice=${maxPrice}`;
+                const urlFilter = `http://techcompare.azurewebsites.net/techCompare/products?category=${categories}&brand=${brands}&minPrice=${minPrice}&maxPrice=${maxPrice}`;
                 console.log("Fetch data based on categories.")
                 const response = await axios.get(urlFilter);
                 setProducts(response.data);

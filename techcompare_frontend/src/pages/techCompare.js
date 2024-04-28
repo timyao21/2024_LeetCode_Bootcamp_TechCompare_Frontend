@@ -19,7 +19,7 @@ export default function TechCompare() {
         const fetchData = async () => {
             try {
                 // console.log(id)
-                const response = await axios.get('http://localhost:8080/techCompare/products/similar/'+id); // Adjust the URL based on your server
+                const response = await axios.get('http://techcompare.azurewebsites.net/techCompare/products/similar/'+id); // Adjust the URL based on your server
                 setCategory(category => response.data[0].category)
                 setProducts(products => response.data)
             } catch (error) {
