@@ -3,8 +3,8 @@ import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import NavDropdown from 'react-bootstrap/NavDropdown';
 import React, { useState, useEffect, useContext } from 'react';
-import { useNavigate } from 'react-router-dom';
 import { UserContext } from '../context/UserContext';
+import { Link } from 'react-router-dom';
 
 
 
@@ -74,15 +74,14 @@ function BasicExample() {
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="me-auto">
-                <Nav.Link href="/">Home</Nav.Link>
-                <Nav.Link href="/search">Search</Nav.Link>
-            </Nav>
+                {/* <Nav.Link href="/">Home</Nav.Link>
+                <Nav.Link href="/search">Search</Nav.Link> */}
+                <Link className="nav-link me-auto" to="/">Home</Link>
+                <Link className="nav-link me-auto" to="/search">Search</Link>
 
-            {/* <Nav className="ms-auto">
-                <Nav.Link href="/wishlist">Wish List</Nav.Link>
-                <Nav.Link href="/signin">Sign in/Sign up</Nav.Link>
-            </Nav> */}
+            </Nav>
             <Nav className="ms-auto">
+
             {user2.isLoggedIn ? (
                 <Nav.Link href="/wishlistpage">Wish List</Nav.Link>
             ) : (
@@ -90,14 +89,17 @@ function BasicExample() {
             )}
             {/* <Nav.Link href="/wishlistpage">Wish List</Nav.Link>/ */}
             {/* <Nav.Link onClick={handleWishList}>Wish List</Nav.Link> */}
+
+            {/* <Nav.Link href="/wishlistpage">Wish List</Nav.Link> */}
+
+
             {user2.isLoggedIn ? (
               <NavDropdown title={user2.email} id="basic-nav-dropdown">
-                {/* <NavDropdown.Item>{user.email}</NavDropdown.Item> */}
-                {/* <NavDropdown.Divider /> */}
                 <NavDropdown.Item onClick={handleLogout}>Sign out</NavDropdown.Item>
               </NavDropdown>
             ) : (
-              <Nav.Link href="/signin" onClick={handleLogin}>Sign in/Sign up</Nav.Link>
+              // <Nav.Link href="/signin" onClick={handleLogin}>Sign in/Sign up</Nav.Link>
+              <Link className="nav-link me-auto" to="/signin">Sign in/Sign up</Link>
             )}
           </Nav>
 

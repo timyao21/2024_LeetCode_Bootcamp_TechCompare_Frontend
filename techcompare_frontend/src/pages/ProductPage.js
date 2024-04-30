@@ -10,7 +10,6 @@ import Button from '@mui/material/Button';
 import { Link } from 'react-router-dom';
 import StarIcon from '@mui/icons-material/Star';
 
-import PriceHistory from '../components/PriceHistory';
 import RateReview from '../components/RateReview';
 import api from '../services/api';
 import ProductImage from '../components/ProductImage';
@@ -70,7 +69,7 @@ export default function ProductPage() {
             try {
                 console.log(id);
                 
-                const url = `http://localhost:8080/techCompare/products/${id}`;
+                const url = `https://techcompare.azurewebsites.net/techCompare/products/${id}`;
                 console.log(url);
                 const response = await axios.get(url, {
                     headers: {
@@ -105,7 +104,7 @@ export default function ProductPage() {
     useEffect(() => {
         const fetchNearbyStores = async () => {
             try {
-                const storesUrl = `http://localhost:8080/techCompare/store/getStoreByInventoryQuantity?productStringId=${id}`;
+                const storesUrl = `https://techcompare.azurewebsites.net/techCompare/store/getStoreByInventoryQuantity?productStringId=${id}`;
                 const storesResponse = await axios.get(storesUrl,{
                     headers: {
                       'Custom-Header': 'value', // 设置 Content-Type 头部

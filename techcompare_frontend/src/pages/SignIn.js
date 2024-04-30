@@ -6,9 +6,6 @@ import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Checkbox from '@mui/material/Checkbox';
-import Link from '@mui/material/Link';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import Alert from '@mui/material/Alert';
@@ -17,6 +14,8 @@ import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { useNavigate } from 'react-router-dom'; 
 import { UserContext } from '../context/UserContext';
+
+import { Link } from 'react-router-dom';
 const token = localStorage.getItem("authToken");
 if (token!="signin"){
     axios.defaults.headers.common = {"signin": "sign"}
@@ -39,7 +38,7 @@ export default function SignIn() {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
     //API
-    const apiUrl = `http://localhost:8080/techCompare/user/login`;
+    const apiUrl = `https://techcompare.azurewebsites.net/techCompare/user/login`;
 
     const singinRequest = {
       email: data.get('email'),
@@ -58,7 +57,7 @@ export default function SignIn() {
     .then(response => {
         setUser(response.data);
         console.log(123); // tr
-        console.log(response.data); // true or false
+        console.log(response); // true or false
         localStorage.setItem('email', data.get('email'));
         localStorage.setItem('authToken', "signin");  // Save the token
         console.log(localStorage.getItem('email'));
@@ -132,7 +131,7 @@ export default function SignIn() {
             </Button>
             <Grid container justifyContent="flex-end">
               <Grid item>
-                <Link href="/signup" variant="body2">
+                <Link to="/signup" variant="body2" >
                   Don't have an account? Sign up
                 </Link>
               </Grid>

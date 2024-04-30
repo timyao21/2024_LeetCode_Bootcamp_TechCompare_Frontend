@@ -2,15 +2,15 @@ import * as React from 'react';
 import { useState, useEffect } from 'react';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
-import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
-import { Button, CardActionArea, CardActions } from '@mui/material';
+import { Button, CardActionArea, CardActions, Box } from '@mui/material';
 import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom'; 
 import axios from 'axios';
 import fetchData from '../pages/WishListPage.js'
+// import product images
+import ProductImage from '../components/ProductImage';
 
-import image123 from '../testDataSet/image1.jpg'
 const token = localStorage.getItem("authToken");
 if (token!="signin"){
     axios.defaults.headers.common = {"signin": "sign"}
@@ -28,7 +28,7 @@ export default function ProductWishCard({id, productName, price, ram, storage, o
     useEffect(() => {
         const fetchCurrentPrice = async () => {
             try {
-                const url = `http://localhost:8080/techCompare/products/${id}/currentprice`;
+                const url = `https://techcompare.azurewebsites.net/techCompare/products/${id}/currentprice`;
                 const response = await axios.get(url, {
                     headers: {
                         'auth': token,
@@ -47,7 +47,7 @@ export default function ProductWishCard({id, productName, price, ram, storage, o
                     params.append('productId', id);
                     params.append('newPrice', newPrice);
 
-                    const url_pricehis = `http://localhost:8080/techCompare/products/updatepricehist`;
+                    const url_pricehis = `https://techcompare.azurewebsites.net/techCompare/products/updatepricehist`;
                     axios.post(url_pricehis, params, {
                         headers: {
                           'Custom-Header': 'value', // 设置 Content-Type 头部
@@ -88,7 +88,7 @@ export default function ProductWishCard({id, productName, price, ram, storage, o
             const email = "user123@example.com";
             console.log('Sending request with:', { email: email, productId: id });
             console.log(token);
-            const response = await axios.post('http://localhost:8080/techCompare/user/removeFromWishlist', null, {
+            const response = await axios.post('https://techcompare.azurewebsites.net/techCompare/user/removeFromWishlist', null, {
             params: {
                 email: email,
                 productId: id
@@ -125,12 +125,9 @@ export default function ProductWishCard({id, productName, price, ram, storage, o
     return (
         <Card sx={{ Width: 345, height:400 }}>
         <CardActionArea component={Link} to={`/product/${id}`}>
-            <CardMedia
-            component="img"
-            height="140"
-            image = {image123}
-            alt="Product"
-            />
+            <Box sx={{height:"150px"}}>
+                <ProductImage id={id}/>
+            </Box>
             <CardContent>
                 <Typography gutterBottom variant="h5" component="div">
                     {productName}

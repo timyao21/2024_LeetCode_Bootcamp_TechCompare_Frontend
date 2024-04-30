@@ -8,7 +8,6 @@ import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
-import Link from '@mui/material/Link';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import Alert from '@mui/material/Alert';
@@ -17,6 +16,8 @@ import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { useNavigate } from 'react-router-dom'; 
 import { UserContext } from '../context/UserContext';
+
+import { Link } from 'react-router-dom';
 const token = localStorage.getItem("authToken");
 if (token!="signin"){
     axios.defaults.headers.common = {"signin": "sign"}
@@ -50,7 +51,7 @@ export default function SignUp() {
     // };
 
     //API url
-    const apiUrlRegister = `http://localhost:8080/techCompare/user/register`;
+    const apiUrlRegister = `https://techcompare.azurewebsites.net/techCompare/user/register`;
 
   const email = data.get('email');  // 从注册表单获取用户输入的邮箱
   const password = data.get('password'); // 从注册表单获取用户输入的密码
@@ -167,7 +168,7 @@ export default function SignUp() {
             </Button>
             <Grid container justifyContent="flex-end">
               <Grid item>
-                <Link href="/signin" variant="body2">
+                <Link to="/signin" variant="body2">
                   Already have an account? Sign in
                 </Link>
               </Grid>

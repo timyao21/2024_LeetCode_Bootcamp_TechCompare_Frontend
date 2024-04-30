@@ -20,7 +20,7 @@ import ComparePage from './pages/ComparePage.js';
 
 function App() {
   return (
-    <BrowserRouter>
+    //<BrowserRouter>
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/product/:id" element={<ProductPage />} />
@@ -32,7 +32,7 @@ function App() {
         <Route path="/product/compare/:id" element={<TechCompare />}/>
         <Route path="/product/compare/:id1/:id2" element={<ComparePage />} />
       </Routes>
-    </BrowserRouter>
+    //</BrowserRouter>
   );
 }
 
