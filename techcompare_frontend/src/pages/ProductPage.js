@@ -20,7 +20,6 @@ import phoneImage from '../images/phone2.png';
 import headphoneImage from '../images/headphone2.jpeg';
 import padImage from '../images/pad2.jpg';
 
-
 const token = localStorage.getItem("authToken");
 if (token!="signin"){
     axios.defaults.headers.common = {"signin": "sign"}
@@ -63,6 +62,44 @@ export default function ProductPage() {
     const [specifications, setSpecifications] = React.useState([]);
     const token = localStorage.getItem("authToken");
 
+    const addReview = (newReview) => {
+        console.log("Adding new review:", newReview);
+        setReview(prevReviews => {
+          const updatedReviews = [...prevReviews, newReview];
+          updateAverageRating(updatedReviews);
+          return updatedReviews;
+        });
+      };
+
+    const updateAverageRating = (updatedReviews) => {
+        const totalRating = updatedReviews.reduce((acc, curr) => acc + curr.rating, 0);
+        const avgRating = updatedReviews.length > 0 ? totalRating / updatedReviews.length : 0;
+        setAverageRating(avgRating);
+    };
+    
+    useEffect(() => {
+        const fetchData = async () => {
+          try {
+            const url = `http://localhost:8080/techCompare/products/${id}`;
+            const response = await axios.get(url, {
+              headers: {
+                'Custom-Header': 'value',
+                'auth': token
+              }
+            });
+            setProduct(response.data);
+            setReview(response.data.review || []);
+            updateAverageRating(response.data.review || []);
+            setPriceHistory(response.data.priceHistory);
+            setSpecifications(response.data.specifications);
+          } catch (error) {
+            console.error('Error fetching data: ', error);
+          }
+        };
+        fetchData();
+      }, [id]);
+    
+    
     useEffect(() => {
         // fetch all products and console.log it 
         const fetchData = async () => {
@@ -78,6 +115,7 @@ export default function ProductPage() {
                     }}        );
                 setProduct(response.data);
                 setReview(response.data.review)
+                
                 if (response.data.review.length > 0) {
                     const totalRating = response.data.review.reduce((acc, curr) => {
                         return acc + curr.rating; 
@@ -171,7 +209,7 @@ export default function ProductPage() {
             Review:
         </Typography>
         
-        <RateReview productId={product.productStringId} />
+        <RateReview addReview={addReview} reviews={review} productId={product.productStringId} />
         <Box sx={{ display: 'flex', alignItems: 'center', mt: 2 }}>
         <StarIcon sx={{ color: "#faaf00" }} /> {/* Display star icon next to the average */}
         <Typography variant="h6" sx={{ ml: 1 }}>
@@ -181,7 +219,7 @@ export default function ProductPage() {
 
         <Stack spacing={2} sx={{mt:1, p:2}}>
             {review.map((item, index) => (
-                <Paper elevation={2} sx={{p:2}}>
+                <Paper elevation={2} sx={{p:2}} key={index}>
                     <Typography>User: {item.email}</Typography>
                     <Typography>{item.comment}</Typography>
                     <Typography sx={{ mt: 2 }}>Rating: {getLabelText(item.rating)}</Typography>
