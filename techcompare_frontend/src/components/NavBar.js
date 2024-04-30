@@ -83,14 +83,10 @@ function BasicExample() {
             <Nav className="ms-auto">
 
             {user2.isLoggedIn ? (
-                <Nav.Link href="/wishlistpage">Wish List</Nav.Link>
+                <Link className="nav-link me-auto" to="/wishlistpage" >Wish List</Link>
             ) : (
-                <Nav.Link onClick={handleWishList}>Wish List</Nav.Link>
+                <Nav className="nav-link me-auto" onClick={handleWishList}>Wish List</Nav>
             )}
-            {/* <Nav.Link href="/wishlistpage">Wish List</Nav.Link>/ */}
-            {/* <Nav.Link onClick={handleWishList}>Wish List</Nav.Link> */}
-
-            {/* <Nav.Link href="/wishlistpage">Wish List</Nav.Link> */}
 
 
             {user2.isLoggedIn ? (
