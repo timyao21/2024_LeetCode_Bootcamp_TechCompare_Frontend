@@ -70,7 +70,11 @@ function Home() {
                 }
                 const urlFilter = `http://localhost:8080/techCompare/products?category=${categories}&brand=${brands}&minPrice=${minPrice}&maxPrice=${maxPrice}`;
                 console.log("Fetch data based on categories.")
-                const response = await axios.get(urlFilter);
+                const response = await axios.get(urlFilter,{
+                    headers: {
+                      'Custom-Header': 'value', // 设置 Content-Type 头部
+                      'auth': token // 设置 Authorization 头部
+                    }});
                 setProducts(response.data);
                 console.log(response.data)
             } catch (error) {
