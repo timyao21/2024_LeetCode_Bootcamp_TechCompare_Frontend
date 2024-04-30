@@ -32,15 +32,16 @@ function getLabelText(value) {
   return `${value} Star${value !== 1 ? 's' : ''}, ${labels[value]}`;
 }
 
-export default function RateReview() {
+export default function RateReview(props) {
   const { user2, login, logout } = useContext(UserContext);
   const { id } = useParams();
   const token = localStorage.getItem("authToken");
-  //console.log("we got id " + id);
+  const { addReview, reviews } = props;
 
   const [value, setValue] = React.useState(2);
   const [hover, setHover] = React.useState(-1);
   const [reviewText, setReviewText] = React.useState('');
+  const [review, setReview] = useState([]);
   ///////
   const [openSnackbar, setOpenSnackbar] = React.useState(false);
   const [snackbarMessage, setSnackbarMessage] = React.useState('');
@@ -68,6 +69,18 @@ export default function RateReview() {
         'auth': token // 设置 Authorization 头部
       }});
       console.log("wrote data:" + response.data);
+
+      // Update local state to include the new review
+      const newReview = {
+        comment: reviewText,
+        rating: value,
+        email: email2,
+        time: new Date() // Match the format expected by your server or front end
+      };
+
+      // Add the new review to the existing reviews array
+      addReview(newReview);
+
       setReviewText('');  // Clear the text field after successful submission
       setSnackbarMessage('Review submitted successfully');
       setOpenSnackbar(true);
